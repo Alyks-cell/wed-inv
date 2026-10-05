@@ -51,6 +51,7 @@
             <label for="guestName">Your name <span>as shown on your invitation</span></label>
             <input id="guestName" name="name" type="text" autocomplete="name" placeholder="Enter your full name" required maxlength="100" aria-describedby="guestNote">
           </div>
+          <div class="rsvp-honeypot" aria-hidden="true"><label for="company">Leave this field empty</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
           <fieldset class="rsvp-response">
             <legend>Your response</legend>
             <div class="rsvp-actions">
@@ -82,7 +83,7 @@
     function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300)}
     $('shareBtn').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);toast('Invitation link copied')}catch{toast('Copy this page link from your browser address bar')}};
     $('printBtn').onclick=()=>window.print();
-    $('rsvpForm').addEventListener('submit',event=>{event.preventDefault();const guest=$('guestName').value.trim();const response=event.submitter?.value;if(!guest||!response)return;$('rsvpStatus').textContent=`Thanks, ${guest}. Your “${response==='accept'?'Accept Invitation':'Decline Invitation'}” choice is ready, but RSVP delivery needs to be connected.`});
+    $('rsvpForm').addEventListener('submit',async event=>{event.preventDefault();const guest=$('guestName').value.trim();const response=event.submitter?.value;if(!guest||!response)return;const buttons=[...event.currentTarget.querySelectorAll('button[type="submit"]')];const status=$('rsvpStatus');buttons.forEach(button=>button.disabled=true);status.textContent='Sending your response…';try{const result=await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:guest,response,company:$('company').value})});if(!result.ok)throw new Error('RSVP submission failed');status.textContent=response==='accept'?'Thank you! We look forward to celebrating with you.':'Thank you for letting us know. You will be missed.';event.currentTarget.reset()}catch{status.textContent='We couldn’t send your RSVP just now. Please try again in a moment.'}finally{buttons.forEach(button=>button.disabled=false)}});
     render();setInterval(tick,1000);
     document.body.classList.add('motion-ready');
     const revealItems=document.querySelectorAll('.reveal,.detail-card');

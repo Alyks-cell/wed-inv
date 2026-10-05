@@ -225,6 +225,8 @@ img{max-width:100%}
 .rsvp-choice.decline{border-color:#dfcfc3;background:#fffdfa;color:#806b60}
 .rsvp-choice.decline .choice-icon{border-color:#cfb9aa}
 .rsvp-choice.decline:hover{background:#f8eee8}
+.rsvp-choice:disabled{cursor:wait;opacity:.65;transform:none;box-shadow:none}
+.rsvp-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 .guest-note{margin:16px 0 0;color:#98887e;font-size:11px;line-height:1.7;text-align:center}
 .rsvp-status{max-width:520px;margin:10px auto 0;padding:0 24px 18px;color:#8d695b;font-size:12px}
 @media(max-width:620px){.rsvp-heading{padding:30px 18px 23px}.rsvp form{padding:22px 18px 0}.rsvp-field label{display:block}.rsvp-field label span{display:block;margin-top:3px}.rsvp-actions{grid-template-columns:1fr}.rsvp-status{padding-inline:18px}}
