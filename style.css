@@ -337,3 +337,260 @@ body{background-color:var(--palette-ivory);background-image:radial-gradient(#ad9
   .palette-swatch { min-width: 43px; font-size: 8px; }
   .palette-dot { width: 40px; height: 30px; }
 }
+
+/* Click-to-open invitation letter */
+.invitation-envelope {
+  position: relative;
+  max-width: 580px;
+  min-height: 360px;
+  margin: 24px auto 0;
+}
+
+.letter-paper {
+  --closed-letter-height: 225px;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 225px;
+  overflow: hidden;
+  border: 1px solid #e7d8c9;
+  background: linear-gradient(145deg, rgba(255, 253, 249, .98), rgba(251, 245, 235, .98)), repeating-linear-gradient(0deg, transparent 0 3px, rgba(150, 126, 104, .025) 3px 4px);
+  box-shadow: 0 12px 26px rgba(92, 68, 50, 0.14);
+  transform-origin: 50% 100%;
+  transform: perspective(900px) translateY(26px) rotateX(2deg);
+  transition: height 920ms cubic-bezier(.22, .75, .2, 1), transform 900ms cubic-bezier(.16, 1, .3, 1), box-shadow 700ms ease;
+}
+
+.letter-inner {
+  padding: 30px clamp(20px, 5vw, 48px);
+  opacity: 0;
+  transition: opacity 450ms ease 320ms;
+}
+
+.letter-preview-lines {
+  position: absolute;
+  top: 20px;
+  right: 9%;
+  left: 9%;
+  height: 52px;
+  background: repeating-linear-gradient(to bottom, transparent 0 22px, rgba(137, 121, 110, .42) 22px 23px);
+}
+
+.invitation-envelope.is-open .letter-paper {
+  position: relative;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  left: auto;
+  width: 100%;
+  height: auto;
+  min-height: 400px;
+  overflow: visible;
+  transform: perspective(900px) translateY(-16px) rotateX(0);
+  transition-delay: 120ms, 120ms, 0s;
+}
+
+.invitation-envelope.is-open .letter-inner {
+  visibility: visible;
+  opacity: 1;
+}
+
+.invitation-envelope.is-open .letter-preview-lines {
+  display: none;
+}
+
+.invitation-envelope .wedding-message {
+  margin: 0 auto 20px;
+}
+
+.invitation-envelope .signoff {
+  margin: 0;
+}
+
+.envelope-trigger {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(100%, 520px);
+  height: 280px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #d7c2af;
+  border-radius: 4px;
+  background: linear-gradient(145deg, #f0e3d7, #e7d4c5);
+  box-shadow: 0 12px 30px rgba(92, 68, 50, 0.12);
+  color: #806958;
+  perspective: 900px;
+  transition: transform 250ms ease, box-shadow 250ms ease, opacity 220ms ease, visibility 0s;
+}
+
+.envelope-trigger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(92, 68, 50, 0.16);
+}
+
+.envelope-trigger:focus-visible {
+  outline: 3px solid var(--palette-champagne);
+  outline-offset: 4px;
+}
+
+.envelope-flap {
+  position: absolute;
+  z-index: 3;
+  inset: 0 0 auto;
+  height: 72%;
+  clip-path: polygon(0 0, 100% 0, 50% 96%);
+  background: linear-gradient(150deg, #f7eee5, #e8d7c9);
+  filter: drop-shadow(0 2px 2px rgba(108, 79, 59, 0.12));
+  transform-origin: 50% 0;
+  backface-visibility: hidden;
+  transition: transform 760ms cubic-bezier(.4, 0, .2, 1), z-index 0s 380ms;
+}
+
+.envelope-pocket {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(135deg, #ead9cb, #dfc9b9);
+}
+
+.envelope-seal {
+  position: absolute;
+  z-index: 4;
+  top: 48%;
+  left: 50%;
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-content: center;
+  border: 1px solid #b99168;
+  border-radius: 50%;
+  background: #c9a77f;
+  box-shadow: 0 3px 8px rgba(96, 66, 42, 0.18);
+  color: #fffaf3;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  transform: translate(-50%, -50%);
+  transition: opacity 250ms ease, transform 350ms ease;
+}
+
+.envelope-seal i {
+  display: inline;
+  font-size: 10px;
+}
+
+.envelope-hint {
+  position: absolute;
+  z-index: 5;
+  right: 12px;
+  bottom: 15px;
+  left: 12px;
+  color: #806958;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.invitation-envelope.is-open .envelope-flap {
+  z-index: 1;
+  transform: rotateX(180deg) translateY(-3px);
+}
+
+.invitation-envelope:not(.is-open) .envelope-trigger {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.invitation-envelope.is-open .envelope-trigger {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  margin: 0 auto;
+  overflow: visible;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 220ms ease, visibility 0s linear 220ms;
+}
+
+.invitation-envelope.is-open .envelope-pocket {
+  inset: auto 0 0;
+  height: 78px;
+  clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(135deg, #ead9cb, #dfc9b9);
+  filter: drop-shadow(0 -2px 3px rgba(108, 79, 59, .1));
+}
+
+.letter-close {
+  display: block;
+  margin: 22px auto 0;
+  padding: 10px 14px;
+  border: 0;
+  border-top: 1px solid #e7d8c9;
+  background: transparent;
+  color: var(--palette-taupe);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  transition: color 180ms ease, letter-spacing 180ms ease;
+}
+
+.letter-close:hover:not(:disabled) {
+  color: var(--palette-champagne);
+  letter-spacing: .19em;
+}
+
+.letter-close:focus-visible {
+  outline: 2px solid var(--palette-champagne);
+  outline-offset: 3px;
+}
+
+.invitation-envelope.is-open #message p {
+  animation: letter-copy-reveal 480ms both;
+}
+
+.invitation-envelope.is-open #message p:nth-child(1) { animation-delay: 300ms; }
+.invitation-envelope.is-open #message p:nth-child(2) { animation-delay: 380ms; }
+.invitation-envelope.is-open #message p:nth-child(3) { animation-delay: 460ms; }
+.invitation-envelope.is-open #message p:nth-child(4) { animation-delay: 540ms; }
+
+.invitation-envelope.is-open .envelope-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.75);
+}
+
+@media (max-width: 620px) {
+  .invitation-envelope { min-height: 300px; margin-top: 20px; }
+  .letter-paper { --closed-letter-height: 200px; height: 200px; }
+  .letter-inner { padding: 24px 16px; }
+  .envelope-trigger { height: 230px; }
+  .invitation-envelope.is-open .envelope-trigger { top: 70px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-paper, .letter-inner, .envelope-trigger, .envelope-flap, .envelope-seal { transition-duration: .01ms; animation-duration: .01ms; transition-delay: 0s !important; }
+}
+
+@media print {
+  .invitation-envelope { min-height: 0; }
+  .letter-paper { position: relative !important; top: auto !important; right: auto !important; left: auto !important; width: 100% !important; height: auto !important; min-height: 0 !important; overflow: visible !important; transform: none !important; }
+  .letter-inner { padding: 0; opacity: 1 !important; }
+  .letter-preview-lines { display: none; }
+  .envelope-trigger, .letter-close { display: none; }
+}
+
+@keyframes letter-copy-reveal {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
