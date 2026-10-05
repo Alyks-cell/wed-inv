@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f8f5ef">
-  <title>A Wedding Invitation</title>
+  <meta name="theme-color" content="#faf6ef">
+  <title>Ranelia &amp; Mark Jan — Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">w</span> Our Wedding</div>
+    <div class="brand"><span class="brand-mark">R&amp;M</span> Wedding Invitation</div>
     <div class="top-actions"><button class="button button-quiet" id="printBtn">Print</button><button class="button button-solid" id="shareBtn">Share invite</button></div>
   </header>
   <main>
     <section class="hero">
       <div class="eyebrow">Together with our families</div>
-      <h1><span id="nameOne">Olivia</span><span class="amp">&amp;</span><span id="nameTwo">James</span></h1>
-      <div class="hero-date" id="heroDate">Saturday, May 22, 2027</div>
+      <h1><span id="nameOne">Ranelia Parigde</span><span class="amp">&amp;</span><span id="nameTwo">Mark Jan Villadar</span></h1>
+      <div class="hero-date" id="heroDate">Tuesday, December 1, 2026</div>
       <div class="ornament">✦</div>
     </section>
     <article class="invitation">
-      <div class="photo-frame" id="photoFrame"><div class="photo-empty"><div><span>A moment, together</span><small>Add your favorite photo</small></div></div></div>
+      <div class="photo-frame" id="photoFrame"><div class="photo-empty"><div><span>No photos, just love</span><small>A day made brighter by you</small></div></div></div>
       <section class="intro reveal">
-        <div class="section-label">With joy in our hearts</div>
-        <p id="inviteText">We would be delighted to have you join us as we begin our next chapter together.</p>
+        <div class="section-label">With joyful hearts</div>
+        <p id="inviteText">We, Ranelia &amp; Mark Jan, invite you to celebrate our wedding day with us.</p>
         <div class="countdown" aria-label="Wedding countdown">
           <div class="count-item"><div class="count-number" id="days">—</div><div class="count-unit">Days</div></div>
           <div class="count-item"><div class="count-number" id="hours">—</div><div class="count-unit">Hours</div></div>
@@ -33,27 +33,56 @@
         <div class="section-label">The celebration</div>
       </section>
       <section class="details reveal">
-        <div class="detail-card"><div class="detail-icon">⌁</div><h2>Ceremony</h2><p id="ceremony">4:00 PM<br>St. Claire Garden Chapel<br>18 Magnolia Lane</p></div>
-        <div class="detail-card"><div class="detail-icon">♧</div><h2>Reception</h2><p id="reception">6:00 PM<br>The Glasshouse at Willow Estate<br>Dinner, dancing &amp; good company</p></div>
-        <div class="detail-card"><div class="detail-icon">⌖</div><h2>Find us</h2><p id="location">Willow Estate<br>Tagaytay City, Philippines</p><a class="map-link" id="mapLink" href="https://maps.google.com" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
-        <div class="detail-card"><div class="detail-icon">✧</div><h2>Dress code</h2><p id="dress">Garden formal<br>Earth tones &amp; soft neutrals</p></div>
+        <div class="detail-card"><div class="detail-icon" aria-hidden="true">✧</div><h2>Wedding ceremony</h2><p id="ceremony">3:00 PM<br>New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p></div>
+        <div class="detail-card"><div class="detail-icon" aria-hidden="true">♡</div><h2>Reception</h2><p id="reception">5:00 PM<br>Reception to follow</p></div>
+        <div class="detail-card"><div class="detail-icon" aria-hidden="true">⌖</div><h2>Find us</h2><p id="location">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p><a class="map-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
+        <div class="detail-card"><div class="detail-icon" aria-hidden="true">✿</div><h2>Dress code</h2><p id="dress">Floor-length dresses<br>Semi-formal attire</p></div>
       </section>
-      <section class="message reveal"><div class="section-label">A little note</div><blockquote id="message">“The best thing to hold onto in life is each other.”</blockquote><div class="signoff" id="signoff">With love, Olivia &amp; James</div></section>
+      <section class="message reveal"><div class="section-label">Our invitation</div><div class="wedding-message" id="message"></div><div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div></section>
+      <section class="rsvp reveal" aria-labelledby="rsvpTitle">
+        <div class="rsvp-heading">
+          <div class="rsvp-flower" aria-hidden="true">✧</div>
+          <div class="rsvp-deadline"><span class="deadline-dot" aria-hidden="true"></span> Kindly reply by November 10, 2026</div>
+          <h2 id="rsvpTitle">Will you join us?</h2>
+          <p class="rsvp-intro">We’d be delighted to celebrate this day with you.</p>
+        </div>
+        <form id="rsvpForm">
+          <div class="rsvp-field">
+            <label for="guestName">Your name <span>as shown on your invitation</span></label>
+            <input id="guestName" name="name" type="text" autocomplete="name" placeholder="Enter your full name" required maxlength="100" aria-describedby="guestNote">
+          </div>
+          <fieldset class="rsvp-response">
+            <legend>Your response</legend>
+            <div class="rsvp-actions">
+              <button class="rsvp-choice accept" type="submit" name="response" value="accept"><span class="choice-icon" aria-hidden="true">✓</span><span>Accept invitation</span></button>
+              <button class="rsvp-choice decline" type="submit" name="response" value="decline"><span class="choice-icon" aria-hidden="true">×</span><span>Decline invitation</span></button>
+            </div>
+          </fieldset>
+          <p class="guest-note" id="guestNote">Our celebration is intimate, so we can only accommodate guests named on the invitation. Kindly, no plus-ones.</p>
+        </form>
+        <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
+      </section>
     </article>
   </main>
-  <footer class="footer">Made with love · We can’t wait to celebrate with you</footer>
+  <footer class="footer">Blush · Beige · Champagne · A day made brighter by you</footer>
   <div class="toast" id="toast" role="status"></div>
   <script>
     // Change these values before publishing. Guests can view the invitation but cannot edit its published content.
-    const data={one:'Olivia',two:'James',date:'2027-05-22T16:00',photo:'',invite:'We would be delighted to have you join us as we begin our next chapter together.',ceremony:'4:00 PM\nSt. Claire Garden Chapel\n18 Magnolia Lane',reception:'6:00 PM\nThe Glasshouse at Willow Estate\nDinner, dancing & good company',location:'Willow Estate\nTagaytay City, Philippines',map:'https://maps.google.com',dress:'Garden formal\nEarth tones & soft neutrals',message:'“The best thing to hold onto in life is each other.”'};
+    const data={one:'Ranelia Parigde',two:'Mark Jan Villadar',date:'2026-12-01T15:00:00+08:00',photo:'',invite:'We, Ranelia & Mark Jan, invite you to celebrate our wedding day with us.',ceremony:'3:00 PM\nNew Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',reception:'5:00 PM\nReception to follow',location:'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',map:'https://www.google.com/maps/search/?api=1&query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines',dress:'Floor-length dresses\nSemi-formal attire',message:[
+      'With joyful hearts, we, Ranelia & Mark Jan, invite you to celebrate our wedding on December 1, 2026.',
+      'After years of love, laughter, and prayers, we are finally saying “I do”—and we can’t imagine this day without you.',
+      'As we keep our celebration intimate, we can only accommodate guests named on the invitation. We kindly ask for no plus ones.',
+      'Please RSVP on or before November 10, 2026 so we can reserve your seat.'
+    ]};
     const $=id=>document.getElementById(id);
-    function prettyDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?'Set your date':new Intl.DateTimeFormat('en',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(d)}
-    function render(){ $('nameOne').textContent=data.one;$('nameTwo').textContent=data.two;$('heroDate').textContent=prettyDate(data.date);$('inviteText').textContent=data.invite;$('ceremony').textContent=data.ceremony;$('reception').textContent=data.reception;$('location').textContent=data.location;$('dress').textContent=data.dress;$('message').textContent=data.message;$('signoff').textContent=`With love, ${data.one} & ${data.two}`;$('mapLink').href=data.map||'https://maps.google.com';$('mapLink').style.display=data.map?'inline-block':'none';
-      const frame=$('photoFrame');if(data.photo){frame.innerHTML='';const img=document.createElement('img');img.src=data.photo;img.alt=`${data.one} and ${data.two}`;frame.append(img)}else frame.innerHTML='<div class="photo-empty"><div><span>A moment, together</span><small>Add your favorite photo</small></div></div>';tick() }
+    function prettyDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?'Set your date':new Intl.DateTimeFormat('en',{timeZone:'Asia/Manila',weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(d)}
+    function render(){ $('nameOne').textContent=data.one;$('nameTwo').textContent=data.two;$('heroDate').textContent=prettyDate(data.date);$('inviteText').textContent=data.invite;$('ceremony').textContent=data.ceremony;$('reception').textContent=data.reception;$('location').textContent=data.location;$('dress').textContent=data.dress;$('message').replaceChildren(...data.message.map(paragraph=>{const p=document.createElement('p');p.textContent=paragraph;return p}));$('signoff').textContent=`With love, ${data.one} & ${data.two}`;$('mapLink').href=data.map||'https://maps.google.com';$('mapLink').style.display=data.map?'inline-block':'none';
+      const frame=$('photoFrame');if(data.photo){frame.innerHTML='';const img=document.createElement('img');img.src=data.photo;img.alt=`${data.one} and ${data.two}`;frame.append(img)}else frame.innerHTML='<div class="photo-empty"><div><span>No photos, just love</span><small>A day made brighter by you</small></div></div>';tick() }
     function tick(){const target=new Date(data.date).getTime(),left=Math.max(0,target-Date.now());const vals=[Math.floor(left/86400000),Math.floor(left%86400000/3600000),Math.floor(left%3600000/60000),Math.floor(left%60000/1000)];['days','hours','minutes','seconds'].forEach((id,i)=>$(id).textContent=String(vals[i]).padStart(2,'0'))}
     function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300)}
     $('shareBtn').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);toast('Invitation link copied')}catch{toast('Copy this page link from your browser address bar')}};
     $('printBtn').onclick=()=>window.print();
+    $('rsvpForm').addEventListener('submit',event=>{event.preventDefault();const guest=$('guestName').value.trim();const response=event.submitter?.value;if(!guest||!response)return;$('rsvpStatus').textContent=`Thanks, ${guest}. Your “${response==='accept'?'Accept Invitation':'Decline Invitation'}” choice is ready, but RSVP delivery needs to be connected.`});
     render();setInterval(tick,1000);
     document.body.classList.add('motion-ready');
     const revealItems=document.querySelectorAll('.reveal,.detail-card');
