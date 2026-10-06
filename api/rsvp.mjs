@@ -45,14 +45,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await fetch(`${supabaseUrl}/rest/v1/rsvps`, {
+    const table = response === 'accept' ? 'accepted_rsvps' : 'declined_rsvps';
+    const result = await fetch(`${supabaseUrl}/rest/v1/${table}`, {
       method: 'POST',
       headers: {
         apikey: supabasePublishableKey,
         'Content-Type': 'application/json',
         Prefer: 'return=minimal'
       },
-      body: JSON.stringify({ guest_name: guestName, response })
+      body: JSON.stringify({ guest_name: guestName })
     });
 
     if (!result.ok) {
