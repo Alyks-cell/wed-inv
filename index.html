@@ -38,7 +38,7 @@
         <div class="detail-card"><div class="detail-icon" aria-hidden="true">⌖</div><h2>Find us</h2><p id="location">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p><a class="map-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
         <div class="detail-card"><div class="detail-icon" aria-hidden="true">✿</div><h2>Dress code</h2><p id="dress">Floor-length dresses<br>Semi-formal attire</p><div class="palette-list" role="list" aria-label="Wedding color palette"><div class="palette-swatch" role="listitem"><span class="palette-dot blush"></span><span>Blush pink</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot beige"></span><span>Soft beige</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot ivory"></span><span>Warm ivory</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot champagne"></span><span>Champagne</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot taupe"></span><span>Taupe</span></div></div></div>
       </section>
-      <section class="message reveal"><div class="section-label">Our invitation</div><div class="invitation-envelope" id="invitationEnvelope"><article class="letter-paper" id="letterPaper" aria-hidden="true"><span class="letter-preview-lines" aria-hidden="true"></span><div class="letter-inner"><div class="wedding-message" id="message"></div><div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div><button class="letter-close" id="closeLetter" type="button" disabled>Close invitation <span aria-hidden="true">↑</span></button></div></article><button class="envelope-trigger" id="envelopeTrigger" type="button" aria-expanded="false" aria-controls="letterPaper" aria-label="Open the wedding invitation"><span class="envelope-flap" aria-hidden="true"></span><span class="envelope-pocket" aria-hidden="true"></span><span class="envelope-seal" aria-hidden="true">R <i>&amp;</i> M</span><span class="envelope-hint">Click to open your invitation</span></button></div></section>
+      <section class="message reveal"><div class="section-label">Our invitation</div><div class="invitation-envelope" id="invitationEnvelope"><article class="letter-paper" id="letterPaper" aria-hidden="true" aria-label="Wedding invitation letter" tabindex="-1"><span class="letter-preview-lines" aria-hidden="true"></span><span class="letter-corner-fold" aria-hidden="true"></span><div class="letter-inner"><div class="wedding-message" id="message"></div><div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div><button class="letter-close" id="closeLetter" type="button" disabled>Close letter <span aria-hidden="true">↓</span></button></div></article><button class="envelope-trigger" id="envelopeTrigger" type="button" aria-expanded="false" aria-controls="letterPaper" aria-label="Open the wedding invitation"><span class="envelope-flap" aria-hidden="true"></span><span class="envelope-pocket" aria-hidden="true"></span><span class="envelope-seal" aria-hidden="true">R <i>&amp;</i> M</span><span class="envelope-hint">Click to open your invitation</span></button></div></section>
       <section class="rsvp reveal" aria-labelledby="rsvpTitle">
         <div class="rsvp-heading">
           <div class="rsvp-flower" aria-hidden="true">✧</div>
@@ -86,30 +86,33 @@
     $('envelopeTrigger').addEventListener('click',()=>{
       const envelope=$('invitationEnvelope'),button=$('envelopeTrigger'),paper=$('letterPaper'),letterInner=paper.querySelector('.letter-inner');
       if(envelope.dataset.animating==='true')return;
-      envelope.dataset.animating='true';
       const isOpening=!envelope.classList.contains('is-open');
-      const finishTransition=()=>{paper.removeEventListener('transitionend',onTransitionEnd);if(isOpening){paper.style.height='auto'}else{paper.style.height='';envelope.style.minHeight=''}delete envelope.dataset.animating};
-      const onTransitionEnd=event=>{if(event.target===paper&&event.propertyName==='height')finishTransition()};
+      envelope.dataset.animating='true';
+      let transitionTimer;
+      const finishTransition=()=>{window.clearTimeout(transitionTimer);paper.removeEventListener('transitionend',onTransitionEnd);if(isOpening){paper.style.height='auto'}else{paper.style.height='';envelope.style.minHeight=''}delete envelope.dataset.animating};
+      const onTransitionEnd=event=>{if(isOpening&&event.target===paper&&event.propertyName==='height')paper.style.height='auto'};
       paper.removeEventListener('transitionend',onTransitionEnd);
       paper.addEventListener('transitionend',onTransitionEnd);
       if(isOpening){
         paper.style.height=`${paper.getBoundingClientRect().height}px`;
         envelope.classList.add('is-open');
         requestAnimationFrame(()=>{const expandedHeight=Math.max(400,Math.ceil(letterInner.getBoundingClientRect().height+2));paper.style.height=`${expandedHeight}px`});
+        paper.setAttribute('aria-hidden','false');
+        paper.focus({preventScroll:true});
       }else{
         envelope.style.minHeight=`${envelope.getBoundingClientRect().height}px`;
         paper.style.height=`${paper.getBoundingClientRect().height}px`;
         const closedHeight=getComputedStyle(paper).getPropertyValue('--closed-letter-height').trim()||'225px';
-        requestAnimationFrame(()=>{envelope.classList.remove('is-open');paper.style.height=closedHeight});
+        const closedEnvelopeHeight=getComputedStyle(envelope).getPropertyValue('--closed-envelope-min-height').trim()||'445px';
+        requestAnimationFrame(()=>{envelope.classList.remove('is-open');paper.style.height=closedHeight;envelope.style.minHeight=closedEnvelopeHeight});
+        paper.setAttribute('aria-hidden','true');
+        button.focus({preventScroll:true});
       }
       button.setAttribute('aria-expanded',String(isOpening));
-      button.setAttribute('aria-label','Open the wedding invitation');
-      button.setAttribute('aria-hidden',String(isOpening));
+      button.setAttribute('aria-label',isOpening?'Wedding invitation is open':'Open the wedding invitation');
       button.tabIndex=isOpening?-1:0;
       $('closeLetter').disabled=!isOpening;
-      paper.setAttribute('aria-hidden',String(!isOpening));
-      button.querySelector('.envelope-hint').textContent='Click to open your invitation';
-      window.setTimeout(finishTransition,1100);
+      transitionTimer=window.setTimeout(finishTransition,isOpening?1400:1100);
     });
     $('closeLetter').addEventListener('click',()=>$('envelopeTrigger').click());
     $('rsvpForm').addEventListener('submit',async event=>{event.preventDefault();const guest=$('guestName').value.trim();const response=event.submitter?.value;if(!guest||!response)return;const buttons=[...event.currentTarget.querySelectorAll('button[type="submit"]')];const status=$('rsvpStatus');buttons.forEach(button=>button.disabled=true);status.textContent='Sending your response…';try{await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:guest,response,company:$('company').value})})}catch{}status.textContent='Thank You!';event.currentTarget.reset();buttons.forEach(button=>button.disabled=false)});
