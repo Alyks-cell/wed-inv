@@ -26,7 +26,7 @@
       <div class="intro-seal" aria-hidden="true">♥</div>
       <h1 id="introNames"><span id="openingNameOne">Ranelia Parigde</span><i>&amp;</i><span id="openingNameTwo">Mark Jan Villadar</span></h1>
       <div class="intro-rule" aria-hidden="true"></div>
-      <p class="intro-date" id="openingDate">December 1, 2026</p>
+      <p class="intro-date" id="openingDate">December 1, 2026</p><br>
       <button class="intro-open" id="openInvitation" type="button">Open</button>
     </div>
   </section>
@@ -52,35 +52,16 @@
       <div class="hero-date" id="heroDate">Tuesday, December 1, 2026</div>
       <div class="ornament">✦</div>
     </section>
-    <section class="message reveal">
-      <div class="section-label">A letter for you</div>
-      <div class="invitation-envelope" id="invitationEnvelope">
-        <article class="letter-paper" id="letterPaper" aria-hidden="true" aria-label="Wedding invitation letter" tabindex="-1">
-          <span class="letter-preview-lines" aria-hidden="true"></span>
-          <span class="letter-corner-fold" aria-hidden="true"></span>
-          <div class="letter-inner">
-            <div class="wedding-message" id="message"></div>
-            <div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div>
-            <button class="letter-close" id="closeLetter" type="button" disabled>Close letter <span aria-hidden="true">↓</span></button>
-          </div>
-        </article>
-        <button class="envelope-trigger" id="envelopeTrigger" type="button" aria-expanded="false" aria-controls="letterPaper" aria-label="Open the wedding invitation">
-          <span class="envelope-flap" aria-hidden="true"></span>
-          <span class="envelope-pocket" aria-hidden="true"></span>
-          <span class="envelope-seal" aria-hidden="true">R <i>&amp;</i> M</span>
-          <span class="envelope-hint">Click to open</span>
-        </button>
-      </div>
-    </section>
-    <article class="invitation">
-      <div class="photo-frame" id="photoFrame">
-        <div class="photo-empty">
-          <div>
-            <span>No photos, just love</span>
-            <small>A day made brighter by you</small>
-          </div>
+    <div class="photo-frame" id="photoFrame">
+      <div class="photo-empty">
+        <div>
+          <span>No photos, just love</span>
+          <small>A day made brighter by you</small>
         </div>
       </div>
+    </div>
+
+    <article class="invitation">
       <section class="intro reveal">
         <div class="section-label">Welcome</div>
         <p id="inviteText">Please join us as we celebrate our wedding day.</p>
@@ -90,8 +71,32 @@
           <div class="count-item"><div class="count-number" id="minutes">—</div><div class="count-unit">Minutes</div></div>
           <div class="count-item"><div class="count-number" id="seconds">—</div><div class="count-unit">Seconds</div></div>
         </div>
-        <div class="section-label">The celebration</div>
       </section>
+      <section class="message reveal">
+        <div class="section-label">A letter for you</div>
+        <div class="invitation-envelope" id="invitationEnvelope">
+          <article class="letter-paper" id="letterPaper" aria-hidden="true" aria-label="Wedding invitation letter" tabindex="-1">
+            <span class="letter-preview-lines" aria-hidden="true"></span>
+            <span class="letter-corner-fold" aria-hidden="true"></span>
+            <button class="letter-skip" id="skipLetterReveal" type="button">Skip</button>
+            <div class="letter-inner">
+              <div class="wedding-message" id="message"></div>
+              <div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div>
+              <div class="letter-actions">
+                <button class="letter-continue" id="letterContinue" type="button" disabled>Continue to RSVP</button>
+                <button class="letter-close" id="closeLetter" type="button" disabled>Close letter</button>
+              </div>
+            </div>
+          </article>
+          <button class="envelope-trigger" id="envelopeTrigger" type="button" aria-expanded="false" aria-controls="letterPaper" aria-label="Open the wedding invitation">
+            <span class="envelope-flap" aria-hidden="true"></span>
+            <span class="envelope-pocket" aria-hidden="true"></span>
+            <span class="envelope-seal" aria-hidden="true">R <i>&amp;</i> M</span>
+            <span class="envelope-hint">Click to open</span>
+          </button>
+        </div>
+      </section>
+      <div class="section-label celebration-label">The celebration</div>
       <section class="details reveal">
         <div class="detail-card"><div class="detail-icon" aria-hidden="true">✧</div><h2>Wedding ceremony</h2><p id="ceremony">3:00 PM<br>New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p></div>
         <div class="detail-card"><div class="detail-icon" aria-hidden="true">♡</div><h2>Reception</h2><p id="reception">5:00 PM<br>Reception to follow</p></div>
@@ -118,7 +123,7 @@
               <button class="rsvp-choice decline" type="submit" name="response" value="decline"><span class="choice-icon" aria-hidden="true">×</span><span>Decline invitation</span></button>
             </div>
           </fieldset>
-          <p class="guest-note" id="guestNote">Our celebration is intimate, so we can only accommodate guests named on the invitation. Kindly, no plus-ones.</p>
+          <p class="guest-note" id="guestNote">We can only accommodate guests named on the invitation. Kindly, no plus-ones.</p>
         </form>
         <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
       </section>

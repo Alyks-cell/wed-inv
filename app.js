@@ -11,14 +11,167 @@ const invitation = {
   map: 'https://www.google.com/maps/search/?api=1&query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines',
   dressCode: 'Floor-length dresses\nSemi-formal attire',
   message: [
-    'With joyful hearts, we invite you to celebrate our wedding on December 1, 2026.',
-    'After years of love, laughter, and prayers, we are finally saying "I do". We cannot imagine this day without you.',
-    'Our celebration is intimate, so we can only accommodate guests named on the invitation. We kindly ask for no plus-ones.',
-    'Please RSVP by November 10, 2026, so we can reserve your seat.',
+    'With joyful hearts we invite you to celebrate our wedding on December 1, 2026.',
+    'After years of love and prayer we cannot imagine this day without you.',
+    'This intimate celebration is reserved for invited guests only.',
+    'No plus-ones please. RSVP by November 10, 2026 to reserve your seat.',
   ],
 };
 
 const getElement = (id) => document.getElementById(id);
+const letterAnimationTimers = [];
+
+function clearLetterAnimationTimers() {
+  letterAnimationTimers.forEach((timer) => window.clearTimeout(timer));
+  letterAnimationTimers.length = 0;
+}
+
+function renderLetterMessage() {
+  const message = getElement('message');
+  const fullMessage = invitation.message.join('\n\n');
+  message.setAttribute('role', 'text');
+  message.setAttribute('aria-label', fullMessage);
+  message.replaceChildren(...invitation.message.map((text) => {
+    const paragraph = document.createElement('p');
+    paragraph.setAttribute('aria-hidden', 'true');
+
+    text.split(/(\s+)/u).forEach((part) => {
+      if (!part) return;
+      if (/^\s+$/u.test(part)) {
+        paragraph.append(document.createTextNode(part));
+        return;
+      }
+
+      const word = document.createElement('span');
+      word.className = 'letter-word';
+      word.setAttribute('aria-hidden', 'true');
+      Array.from(part).forEach((character, index) => {
+        const letter = document.createElement('span');
+        letter.className = 'letter-glyph';
+        letter.style.setProperty('--letter-delay', `${index * 14}ms`);
+        letter.textContent = character;
+        word.append(letter);
+      });
+
+      ['sparkle-one', 'sparkle-two', 'sparkle-three'].forEach((particleClass) => {
+        const particle = document.createElement('span');
+        particle.className = `word-sparkle ${particleClass}`;
+        particle.setAttribute('aria-hidden', 'true');
+        word.append(particle);
+      });
+
+      paragraph.append(word);
+    });
+
+    return paragraph;
+  }));
+}
+
+function renderSignature() {
+  const signature = getElement('signoff');
+  const fullSignature = `With love, ${invitation.firstName} & ${invitation.secondName}`;
+  signature.setAttribute('role', 'text');
+  signature.setAttribute('aria-label', fullSignature);
+  signature.dataset.signature = fullSignature;
+
+  const prefix = document.createElement('span');
+  prefix.className = 'signoff-prefix';
+  prefix.textContent = 'With love, ';
+
+  const firstName = document.createElement('span');
+  firstName.className = 'signature-name signature-name-first';
+  firstName.setAttribute('aria-hidden', 'true');
+  firstName.textContent = invitation.firstName;
+
+  const joiner = document.createElement('span');
+  joiner.className = 'signature-joiner';
+  joiner.setAttribute('aria-hidden', 'true');
+  joiner.textContent = ' & ';
+
+  const secondName = document.createElement('span');
+  secondName.className = 'signature-name signature-name-second';
+  secondName.setAttribute('aria-hidden', 'true');
+  secondName.textContent = invitation.secondName;
+  signature.replaceChildren(prefix, firstName, joiner, secondName);
+}
+
+function resetLetterReveal() {
+  clearLetterAnimationTimers();
+  const paper = getElement('letterPaper');
+  paper.classList.remove('is-revealing', 'signature-revealed', 'reveal-complete', 'reveal-skipped', 'reveal-reduced');
+  delete paper.dataset.revealScheduled;
+  paper.style.removeProperty('--signature-start');
+  paper.style.removeProperty('--signature-shimmer-delay');
+  paper.querySelector('.signoff').classList.remove('is-shimmering');
+  getElement('closeLetter').disabled = true;
+  getElement('letterContinue').disabled = true;
+}
+
+function completeLetterReveal({ skipped = false, reduced = false } = {}) {
+  clearLetterAnimationTimers();
+  const paper = getElement('letterPaper');
+  paper.classList.remove('is-revealing');
+  if (skipped) paper.classList.add('reveal-skipped');
+  if (reduced) paper.classList.add('reveal-reduced');
+  paper.classList.add('signature-revealed', 'reveal-complete');
+  paper.querySelector('.signoff').classList.add('is-shimmering');
+  getElement('closeLetter').disabled = false;
+  getElement('letterContinue').disabled = false;
+}
+
+function beginLetterReveal() {
+  const paper = getElement('letterPaper');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion) {
+    completeLetterReveal({ reduced: true });
+    return;
+  }
+
+  const wordInterval = window.matchMedia('(max-width: 620px)').matches ? 40 : 160;
+  let delay = 0;
+  let longestWord = 0;
+
+  paper.classList.add('is-revealing');
+  paper.querySelectorAll('.letter-word').forEach((word) => {
+    word.style.setProperty('--word-delay', `${delay}ms`);
+    const letterCount = word.querySelectorAll('.letter-glyph').length;
+    longestWord = Math.max(longestWord, letterCount);
+    delay += wordInterval;
+
+    const text = word.textContent.trim();
+    if (/[,;:]$/u.test(text)) delay += 400;
+    else if (/[.!?]$/u.test(text)) delay += 700;
+  });
+
+  const bodyDuration = delay + 600 + Math.max(0, longestWord - 1) * 14;
+  paper.style.setProperty('--signature-start', `${bodyDuration}ms`);
+  paper.style.setProperty('--signature-shimmer-delay', `${bodyDuration + 2100}ms`);
+
+  letterAnimationTimers.push(window.setTimeout(() => {
+    paper.classList.add('signature-revealed');
+    paper.querySelector('.signoff').classList.add('is-shimmering');
+  }, bodyDuration + 2100));
+  letterAnimationTimers.push(window.setTimeout(() => {
+    paper.classList.add('reveal-complete');
+    getElement('closeLetter').disabled = false;
+    getElement('letterContinue').disabled = false;
+  }, bodyDuration + 3000));
+}
+
+function scheduleLetterReveal() {
+  const paper = getElement('letterPaper');
+  if (paper.dataset.revealScheduled === 'true') return;
+  paper.dataset.revealScheduled = 'true';
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    beginLetterReveal();
+    return;
+  }
+
+  letterAnimationTimers.push(window.setTimeout(beginLetterReveal, 1200));
+}
 
 function formatFullDate(value) {
   const date = new Date(value);
@@ -53,14 +206,8 @@ function renderInvitation() {
   getElement('reception').textContent = invitation.reception;
   getElement('location').textContent = invitation.location;
   getElement('dress').textContent = invitation.dressCode;
-  getElement('message').replaceChildren(
-    ...invitation.message.map((text) => {
-      const paragraph = document.createElement('p');
-      paragraph.textContent = text;
-      return paragraph;
-    }),
-  );
-  getElement('signoff').textContent = `With love, ${invitation.firstName} & ${invitation.secondName}`;
+  renderLetterMessage();
+  renderSignature();
 
   const mapLink = getElement('mapLink');
   mapLink.href = invitation.map || 'https://maps.google.com';
@@ -138,16 +285,20 @@ function toggleEnvelope() {
   let transitionTimer;
 
   if (isOpening) {
+    resetLetterReveal();
     const finishOpening = () => {
+      if (paper.dataset.revealScheduled === 'true') return;
       window.clearTimeout(transitionTimer);
+      paper.removeEventListener('transitionend', onOpenEnd);
       paper.style.height = 'auto';
       delete envelope.dataset.animating;
+      scheduleLetterReveal();
     };
-    const onHeightEnd = (event) => {
-      if (event.target === paper && event.propertyName === 'height') finishOpening();
+    const onOpenEnd = (event) => {
+      if (event.target === paper && event.propertyName === 'transform') finishOpening();
     };
 
-    paper.addEventListener('transitionend', onHeightEnd, { once: true });
+    paper.addEventListener('transitionend', onOpenEnd);
     paper.style.height = `${paper.getBoundingClientRect().height}px`;
     envelope.classList.add('is-open');
 
@@ -161,8 +312,7 @@ function toggleEnvelope() {
     button.setAttribute('aria-expanded', 'true');
     button.setAttribute('aria-label', 'Wedding invitation is open');
     button.tabIndex = -1;
-    getElement('closeLetter').disabled = false;
-    transitionTimer = window.setTimeout(finishOpening, 1400);
+    transitionTimer = window.setTimeout(finishOpening, 1600);
     return;
   }
 
@@ -172,6 +322,7 @@ function toggleEnvelope() {
     window.clearTimeout(transitionTimer);
     paper.removeEventListener('animationend', onSlideEnd);
     envelope.classList.remove('is-closing', 'is-open');
+    resetLetterReveal();
     envelope.style.minHeight = closedHeight;
     paper.setAttribute('aria-hidden', 'true');
     button.setAttribute('aria-label', 'Open the wedding invitation');
@@ -256,6 +407,15 @@ getElement('printBtn').addEventListener('click', () => window.print());
 getElement('openInvitation').addEventListener('click', openMainInvitation);
 getElement('envelopeTrigger').addEventListener('click', toggleEnvelope);
 getElement('closeLetter').addEventListener('click', () => getElement('envelopeTrigger').click());
+getElement('skipLetterReveal').addEventListener('click', () => completeLetterReveal({ skipped: true }));
+getElement('letterContinue').addEventListener('click', () => {
+  getElement('letterContinue').disabled = true;
+  getElement('envelopeTrigger').click();
+  window.setTimeout(() => {
+    getElement('rsvpForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    getElement('guestName').focus({ preventScroll: true });
+  }, 1150);
+});
 getElement('rsvpForm').addEventListener('submit', handleRsvp);
 
 renderInvitation();
