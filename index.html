@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf6ef">
   <title>Ranelia &amp; Mark Jan — Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="intro-active">
@@ -23,53 +26,37 @@
         <g fill="#d9aaa0"><circle cx="30" cy="102" r="21"/><circle cx="30" cy="102" r="13" fill="#b7867e"/><circle cx="77" cy="211" r="24"/><circle cx="77" cy="211" r="15" fill="#b7867e"/></g>
         <g fill="#ead9c3"><circle cx="59" cy="158" r="15"/><circle cx="59" cy="158" r="8" fill="#b79b71"/><circle cx="120" cy="86" r="5"/><circle cx="132" cy="66" r="4"/><circle cx="123" cy="51" r="4"/><circle cx="140" cy="43" r="3"/></g>
       </svg>
-      <div class="intro-seal" aria-hidden="true">♥</div>
-      <h1 id="introNames"><span id="openingNameOne">Ranelia Parigde</span><i>&amp;</i><span id="openingNameTwo">Mark Jan Villadar</span></h1>
+      <h1 id="introNames"><span id="openingNameOne">Ranelia</span><i>&amp;</i><span id="openingNameTwo">Mark Jan</span></h1>
+      <div class="intro-surnames" aria-hidden="true"><span id="openingSurnameOne">Parigde</span><span>·</span><span id="openingSurnameTwo">Villadar</span></div>
       <div class="intro-rule" aria-hidden="true"></div>
       <p class="intro-date" id="openingDate">December 1, 2026</p><br>
       <button class="intro-open" id="openInvitation" type="button">Open</button>
     </div>
   </section>
-  <header class="topbar" id="topbar" inert aria-hidden="true">
-    <div class="brand">
-      <span class="brand-mark">R&amp;M</span>
-      Wedding Invitation
-    </div>
-    <div class="top-actions">
-      <button class="button button-quiet" id="printBtn" type="button">Print</button>
-      <button class="button button-solid" id="shareBtn" type="button">Share invite</button>
-    </div>
-  </header>
 
   <main id="invitationMain" inert aria-hidden="true">
     <section class="hero">
       <div class="eyebrow">Together with our families</div>
       <h1 id="invitationHeading" tabindex="-1">
-        <span id="nameOne">Ranelia Parigde</span>
+        <span id="nameOne">Ranelia</span>
         <span class="amp">&amp;</span>
-        <span id="nameTwo">Mark Jan Villadar</span>
+        <span id="nameTwo">Mark Jan</span>
       </h1>
-      <div class="hero-date" id="heroDate">Tuesday, December 1, 2026</div>
-      <div class="ornament">✦</div>
+      <div class="hero-surnames" aria-hidden="true"><span id="surnameOne">Parigde</span><span>&middot;</span><span id="surnameTwo">Villadar</span></div>
+      <br><div class="hero-date" id="heroDate">Tuesday, December 1, 2026</div>
+      <div class="ornament" aria-hidden="true"></div>
     </section>
-    <div class="photo-frame" id="photoFrame">
-      <div class="photo-empty">
-        <div>
-          <span>No photos, just love</span>
-          <small>A day made brighter by you</small>
-        </div>
-      </div>
-    </div>
+    <div class="photo-frame" id="photoFrame"></div>
 
     <article class="invitation">
       <section class="intro reveal">
         <div class="section-label">Welcome</div>
-        <p id="inviteText">Please join us as we celebrate our wedding day.</p>
-        <div class="countdown" aria-label="Wedding countdown">
-          <div class="count-item"><div class="count-number" id="days">—</div><div class="count-unit">Days</div></div>
-          <div class="count-item"><div class="count-number" id="hours">—</div><div class="count-unit">Hours</div></div>
-          <div class="count-item"><div class="count-number" id="minutes">—</div><div class="count-unit">Minutes</div></div>
-          <div class="count-item"><div class="count-number" id="seconds">—</div><div class="count-unit">Seconds</div></div>
+        <p id="inviteText">Our hearts are full as we count the days.</p>
+        <div class="countdown" aria-label="Wedding countdown" aria-busy="true">
+          <div class="count-item"><div class="count-number" id="days"></div><div class="count-unit">Days</div></div>
+          <div class="count-item"><div class="count-number" id="hours"></div><div class="count-unit">Hours</div></div>
+          <div class="count-item"><div class="count-number" id="minutes"></div><div class="count-unit">Minutes</div></div>
+          <div class="count-item"><div class="count-number" id="seconds"></div><div class="count-unit">Seconds</div></div>
         </div>
       </section>
       <section class="message reveal">
@@ -81,7 +68,7 @@
             <button class="letter-skip" id="skipLetterReveal" type="button">Skip</button>
             <div class="letter-inner">
               <div class="wedding-message" id="message"></div>
-              <div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div>
+              <div class="signoff" id="signoff">Ranelia Parigde &amp; Mark Jan Villadar</div>
               <div class="letter-actions">
                 <button class="letter-continue" id="letterContinue" type="button" disabled>Continue to RSVP</button>
                 <button class="letter-close" id="closeLetter" type="button" disabled>Close letter</button>
@@ -98,14 +85,14 @@
       </section>
       <div class="section-label celebration-label">The celebration</div>
       <section class="details reveal">
-        <div class="detail-card"><div class="detail-icon" aria-hidden="true">✧</div><h2>Wedding ceremony</h2><p id="ceremony">3:00 PM<br>New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p></div>
-        <div class="detail-card"><div class="detail-icon" aria-hidden="true">♡</div><h2>Reception</h2><p id="reception">5:00 PM<br>Reception to follow</p></div>
-        <div class="detail-card"><div class="detail-icon" aria-hidden="true">⌖</div><h2>Find us</h2><p id="location">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p><a class="map-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
-        <div class="detail-card"><div class="detail-icon" aria-hidden="true">✿</div><h2>Dress code</h2><p id="dress">Floor-length dresses<br>Semi-formal attire</p><div class="palette-list" role="list" aria-label="Wedding color palette"><div class="palette-swatch" role="listitem"><span class="palette-dot blush"></span><span>Blush pink</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot beige"></span><span>Soft beige</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot ivory"></span><span>Warm ivory</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot champagne"></span><span>Champagne</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot taupe"></span><span>Taupe</span></div></div></div>
+        <div class="detail-card"><h2>Wedding ceremony</h2><p id="ceremony">3:00 PM<br>New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p></div>
+        <div class="detail-card"><h2>Reception</h2><p id="reception">5:00 PM<br>Reception to follow</p></div>
+        <div class="detail-card"><h2>Find us</h2><p id="location">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p><a class="map-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Open in Google Maps</a></div>
+        <div class="detail-card"><h2>Dress code</h2><p id="dress">Floor-length dresses<br>Semi-formal attire</p><p class="dress-note">Guests are warmly invited to wear these tones.</p><div class="palette-list" role="list" aria-label="Wedding color palette"><div class="palette-swatch" role="listitem"><span class="palette-dot blush"></span><span>Blush pink</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot beige"></span><span>Soft beige</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot ivory"></span><span>Warm ivory</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot champagne"></span><span>Champagne</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot taupe"></span><span>Taupe</span></div></div></div>
       </section>
       <section class="rsvp reveal" aria-labelledby="rsvpTitle">
         <div class="rsvp-heading">
-          <div class="rsvp-flower" aria-hidden="true">✧</div>
+          <div class="rsvp-flower" aria-hidden="true"></div>
           <div class="rsvp-deadline"><span class="deadline-dot" aria-hidden="true"></span> Kindly reply by November 10, 2026</div>
           <h2 id="rsvpTitle">Will you join us?</h2>
           <p class="rsvp-intro">We’d be delighted to celebrate this day with you.</p>
@@ -123,13 +110,13 @@
               <button class="rsvp-choice decline" type="submit" name="response" value="decline"><span class="choice-icon" aria-hidden="true">×</span><span>Decline invitation</span></button>
             </div>
           </fieldset>
-          <p class="guest-note" id="guestNote">We can only accommodate guests named on the invitation. Kindly, no plus-ones.</p>
+          <p class="guest-note" id="guestNote">We're keeping our celebration intimate and have reserved a seat for each guest named on the invitation.</p>
         </form>
         <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
       </section>
     </article>
   </main>
-  <footer class="footer" inert aria-hidden="true">Blush · Beige · Champagne · A day made brighter by you</footer>
+  <footer class="footer" inert aria-hidden="true"><button class="footer-share" id="shareBtn" type="button">Share</button></footer>
   <div class="toast" id="toast" role="status"></div>
   <script src="app.js"></script>
 </body>

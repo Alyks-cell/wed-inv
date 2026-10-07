@@ -1513,3 +1513,223 @@ body { color: var(--ink); background-color: var(--palette-ivory); }
   .count-item { padding-inline: 2px; }
   .count-unit { font-size: 7px; letter-spacing: .08em; }
 }
+
+/* Minimal finishing details: linework replaces decorative text symbols. */
+.hero::before,
+.hero::after { content: none !important; }
+.intro-seal {
+  border-color: var(--palette-champagne);
+  background: transparent !important;
+  box-shadow: inset 0 0 0 4px rgba(229, 211, 175, .18);
+}
+.rsvp-flower {
+  display: block;
+  width: 44px;
+  height: 1px;
+  margin: 0 auto 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--palette-champagne);
+  animation: none;
+}
+.footer-share {
+  padding: 10px 22px;
+  border: 1px solid #b99b70;
+  background: transparent;
+  color: var(--palette-burgundy);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.footer-share:hover { background: var(--palette-burgundy); color: var(--palette-ivory); }
+.footer-share:focus-visible { outline: 2px solid var(--palette-blue); outline-offset: 4px; }
+
+/* Name hierarchy and guest-friendly details. */
+.hero-surnames,
+.intro-surnames {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #80685c;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.hero-surnames { margin-top: 2px; }
+.intro-surnames { margin-top: 13px; font-size: 12px; letter-spacing: .18em; }
+.hero-surnames span:nth-child(2),
+.intro-surnames span:nth-child(2) { color: var(--palette-champagne); }
+.rsvp-honeypot { display: none !important; }
+.dress-note {
+  margin: 10px 0 0 !important;
+  color: #80685c !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px !important;
+  font-style: italic;
+}
+.palette-list .palette-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+@media (max-width: 420px) {
+  .hero-surnames { font-size: 12px; gap: 9px; }
+  .intro-surnames { font-size: 10px; }
+}
+
+/* Watercolor botanical artwork and the welcome story. */
+.photo-empty {
+  position: relative;
+  display: grid;
+  height: 100%;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #fbf8f0 0%, #f5efe1 62%, #e5d3af 100%);
+}
+.photo-botanical {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .72;
+  pointer-events: none;
+}
+.photo-caption {
+  position: relative;
+  z-index: 1;
+  padding: 18px 28px;
+  background: radial-gradient(ellipse, rgba(250, 246, 239, .94), rgba(250, 246, 239, .64) 65%, transparent 100%);
+  color: var(--palette-burgundy);
+  text-align: center;
+}
+.photo-caption span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(23px, 3vw, 31px);
+  font-style: italic;
+}
+.photo-caption small {
+  display: block;
+  margin-top: 7px;
+  color: #80685c;
+  font-size: 9px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.intro #inviteText { max-width: 650px; margin-inline: auto; }
+
+/* Consistent ivory paper, restrained champagne linework, and editorial type. */
+:root {
+  --palette-ivory: #faf6ef;
+  --palette-champagne: #c5a474;
+  --cream: var(--palette-ivory);
+  --paper: var(--palette-ivory);
+  --ink: #594b45;
+  --muted: #76675f;
+  --gold: var(--palette-champagne);
+  --line: rgba(197, 164, 116, .55);
+}
+html, body { background-color: var(--palette-ivory); }
+body {
+  color: var(--ink);
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-weight: 300;
+  background-image: radial-gradient(rgba(173, 154, 135, .09) .65px, transparent .75px);
+}
+.intro-screen {
+  background:
+    radial-gradient(rgba(173, 154, 135, .09) .65px, transparent .75px),
+    var(--palette-ivory) !important;
+  background-size: 9px 9px, auto;
+}
+.intro-card, .detail-card, .rsvp, .rsvp-heading {
+  background: var(--palette-ivory) !important;
+  color: var(--ink);
+}
+.intro-card { border-color: rgba(197, 164, 116, .55); box-shadow: 0 14px 40px rgba(89, 75, 69, .08); }
+.hero { background: transparent !important; }
+.hero h1, .detail-card h2, .rsvp h2, .intro-card h1 { color: var(--ink) !important; }
+.hero h1, .intro-card h1, .detail-card h2, .rsvp h2, .photo-caption span {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+.hero h1 .amp, .intro-card h1 i { color: var(--palette-champagne) !important; }
+.hero-date, .hero-surnames, .intro-surnames, .detail-card p, .rsvp-intro,
+.rsvp-field label, .rsvp-response legend, .guest-note, .dress-note {
+  color: #76675f !important;
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-weight: 300;
+}
+.eyebrow, .section-label, .count-unit, .palette-swatch, .rsvp-deadline,
+.rsvp-field label, .rsvp-response legend {
+  letter-spacing: .2em;
+}
+.section-label { color: #76675f; }
+.ornament:before, .ornament:after, .intro-rule, .countdown,
+.count-item + .count-item, .detail-card, .rsvp-heading, .rsvp-response,
+.map-link, .intro-open, .letter-actions button, .rsvp-choice,
+.footer-share, .envelope-trigger {
+  border-color: var(--palette-champagne) !important;
+}
+.countdown { visibility: hidden; opacity: 0; transition: opacity 700ms ease; }
+.countdown.is-ready { visibility: visible; opacity: 1; }
+.countdown, .count-item { border-color: rgba(197, 164, 116, .65) !important; }
+.count-number { color: var(--ink) !important; }
+.count-unit { color: #76675f !important; }
+.detail-card { box-shadow: none !important; }
+.detail-card p, .rsvp-intro, .guest-note, .dress-note, .rsvp-field label,
+.rsvp-response legend, .rsvp-status, .rsvp-deadline { font-weight: 300; }
+.rsvp-heading { border-bottom-color: rgba(197, 164, 116, .5) !important; }
+.rsvp-deadline { color: #76675f; background: transparent; }
+.deadline-dot { background: var(--palette-champagne); }
+.intro-open, .letter-continue, .letter-actions .letter-close, .rsvp-choice,
+.rsvp-choice.decline {
+  color: var(--ink) !important;
+  background: transparent !important;
+  border: 1px solid var(--palette-champagne) !important;
+  box-shadow: none !important;
+}
+.intro-open:hover, .letter-continue:hover:not(:disabled),
+.letter-actions .letter-close:hover:not(:disabled), .rsvp-choice:hover {
+  background: #f2e9dc !important;
+  color: var(--ink) !important;
+}
+.envelope-trigger {
+  background: linear-gradient(145deg, #faf6ef, #f4ecdf 58%, #eee3d2) !important;
+  color: var(--ink) !important;
+}
+.envelope-flap { border-bottom-color: rgba(197, 164, 116, .35); }
+.map-link { color: var(--ink) !important; border-bottom-color: var(--palette-champagne) !important; font-weight: 400; }
+.palette-dot { box-shadow: 0 0 0 1px rgba(197, 164, 116, .45); }
+.rsvp input { background: #fffdf9; border-color: rgba(197, 164, 116, .6); font-family: 'DM Sans', Arial, sans-serif; font-weight: 300; }
+.rsvp input:focus { border-color: var(--palette-champagne); box-shadow: 0 0 0 3px rgba(197, 164, 116, .15); }
+.rsvp-choice { font-weight: 400; }
+/* Keep the existing intersection-based reveals slow and soft. */
+.motion-ready .reveal {
+  transition: opacity 950ms ease, transform 950ms cubic-bezier(.22, .61, .36, 1);
+}
+@keyframes countdown-appear { from { opacity: 0; } to { opacity: 1; } }
+.countdown.is-ready { animation: countdown-appear 700ms ease both; }
+@media (max-width: 420px) {
+  .intro-card { padding-inline: 26px; }
+  .hero { padding-inline: 14px; }
+  .hero-date { letter-spacing: .045em; }
+  .intro #inviteText { font-size: clamp(18px, 5.2vw, 22px); line-height: 1.55; }
+  .countdown { min-height: 90px; }
+  .rsvp { padding-inline: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .reveal { opacity: 1; transform: none; transition: none; }
+  .countdown, .countdown.is-ready { transition: none; animation: none; }
+}
+/* Focus remains accessible without a stark browser-default frame around the hero. */
+#invitationHeading:focus { outline: none; }
+#invitationHeading:focus-visible { text-decoration: underline; text-decoration-color: rgba(197, 164, 116, .55); text-decoration-thickness: 1px; text-underline-offset: .12em; }
+.eyebrow, .section-label, .palette-swatch { color: #76675f !important; }
+.intro-date { color: #76675f !important; }
+#invitationHeading:focus-visible { text-decoration: none !important; }
+.letter-paper { color: var(--ink) !important; background: var(--palette-ivory) !important; border-color: rgba(197, 164, 116, .6) !important; }
+.envelope-seal { color: var(--ink) !important; background: #f2e9dc !important; border-color: var(--palette-champagne) !important; }
+.footer-share:hover { background: #f2e9dc !important; color: var(--ink) !important; }
+.toast { background: #6f625a; color: var(--palette-ivory); }

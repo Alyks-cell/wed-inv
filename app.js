@@ -4,7 +4,7 @@ const invitation = {
   secondName: 'Mark Jan Villadar',
   date: '2026-12-01T15:00:00+08:00',
   photo: '',
-  welcome: 'We invite you to celebrate our wedding day with us.',
+  welcome: 'A new chapter begins on December 1, and it would mean so much to celebrate it with you. Thank you for being part of the story that brought us here.',
   ceremony: '3:00 PM\nNew Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
   reception: '5:00 PM\nReception to follow',
   location: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
@@ -69,14 +69,10 @@ function renderLetterMessage() {
 
 function renderSignature() {
   const signature = getElement('signoff');
-  const fullSignature = `With love, ${invitation.firstName} & ${invitation.secondName}`;
+  const fullSignature = `${invitation.firstName} & ${invitation.secondName}`;
   signature.setAttribute('role', 'text');
   signature.setAttribute('aria-label', fullSignature);
   signature.dataset.signature = fullSignature;
-
-  const prefix = document.createElement('span');
-  prefix.className = 'signoff-prefix';
-  prefix.textContent = 'With love, ';
 
   const firstName = document.createElement('span');
   firstName.className = 'signature-name signature-name-first';
@@ -92,7 +88,7 @@ function renderSignature() {
   secondName.className = 'signature-name signature-name-second';
   secondName.setAttribute('aria-hidden', 'true');
   secondName.textContent = invitation.secondName;
-  signature.replaceChildren(prefix, firstName, joiner, secondName);
+  signature.replaceChildren(firstName, joiner, secondName);
 }
 
 function resetLetterReveal() {
@@ -187,13 +183,29 @@ function formatFullDate(value) {
   }).format(date);
 }
 
+function splitName(name) {
+  const parts = name.trim().split(/\s+/u);
+  return {
+    givenNames: parts.slice(0, -1).join(' '),
+    surname: parts.at(-1) || '',
+  };
+}
+
 function renderInvitation() {
   const date = new Date(invitation.date);
+  const first = splitName(invitation.firstName);
+  const second = splitName(invitation.secondName);
 
-  getElement('nameOne').textContent = invitation.firstName;
-  getElement('nameTwo').textContent = invitation.secondName;
-  getElement('openingNameOne').textContent = invitation.firstName;
-  getElement('openingNameTwo').textContent = invitation.secondName;
+  getElement('nameOne').textContent = first.givenNames;
+  getElement('nameTwo').textContent = second.givenNames;
+  getElement('surnameOne').textContent = first.surname;
+  getElement('surnameTwo').textContent = second.surname;
+  getElement('openingNameOne').textContent = first.givenNames;
+  getElement('openingNameTwo').textContent = second.givenNames;
+  getElement('openingSurnameOne').textContent = first.surname;
+  getElement('openingSurnameTwo').textContent = second.surname;
+  getElement('invitationHeading').setAttribute('aria-label', `${invitation.firstName} and ${invitation.secondName}`);
+  getElement('introNames').setAttribute('aria-label', `${invitation.firstName} and ${invitation.secondName}`);
   getElement('openingDate').textContent = new Intl.DateTimeFormat('en', {
     timeZone: 'Asia/Manila',
     month: 'long',
@@ -221,7 +233,33 @@ function renderPhoto() {
   const frame = getElement('photoFrame');
 
   if (!invitation.photo) {
-    frame.innerHTML = '<div class="photo-empty"><div><span>No photos, just love</span><small>A day made brighter by you</small></div></div>';
+    frame.innerHTML = `<div class="photo-empty">
+      <svg class="photo-botanical" viewBox="0 0 760 360" role="img" aria-label="Soft watercolor illustration of blush roses and delicate leaves">
+        <defs>
+          <linearGradient id="botanicalWash" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9aaa0" stop-opacity=".55"/><stop offset="1" stop-color="#c5a474" stop-opacity=".24"/></linearGradient>
+          <radialGradient id="roseWash"><stop stop-color="#f5e7dc"/><stop offset=".68" stop-color="#d9aaa0" stop-opacity=".75"/><stop offset="1" stop-color="#b7867e" stop-opacity=".48"/></radialGradient>
+        </defs>
+        <g fill="none" stroke="#8e9b83" stroke-width="2" stroke-linecap="round" opacity=".62">
+          <path d="M110 345C150 272 165 191 213 45M143 289C98 260 81 218 76 178M166 231C214 204 238 161 250 118M188 171C145 138 136 101 139 70M608 345C568 272 553 191 505 45M575 289C620 260 637 218 642 178M552 231C504 204 480 161 468 118M530 171C573 138 582 101 579 70"/>
+          <path d="M130 312L90 277M157 260L201 228M177 210L142 174M594 312L634 277M567 260L523 228M547 210L582 174"/>
+        </g>
+        <g fill="#aeb99e" opacity=".58">
+          <ellipse cx="95" cy="269" rx="10" ry="26" transform="rotate(-48 95 269)"/><ellipse cx="194" cy="230" rx="10" ry="25" transform="rotate(43 194 230)"/>
+          <ellipse cx="146" cy="170" rx="9" ry="23" transform="rotate(-48 146 170)"/><ellipse cx="622" cy="269" rx="10" ry="26" transform="rotate(48 622 269)"/>
+          <ellipse cx="526" cy="230" rx="10" ry="25" transform="rotate(-43 526 230)"/><ellipse cx="574" cy="170" rx="9" ry="23" transform="rotate(48 574 170)"/>
+        </g>
+        <g fill="url(#roseWash)" stroke="#b7867e" stroke-opacity=".32">
+          <circle cx="238" cy="105" r="37"/><circle cx="522" cy="105" r="37"/>
+          <circle cx="184" cy="264" r="27"/><circle cx="576" cy="264" r="27"/>
+        </g>
+        <g fill="url(#botanicalWash)">
+          <circle cx="238" cy="105" r="18"/><circle cx="522" cy="105" r="18"/>
+          <circle cx="184" cy="264" r="13"/><circle cx="576" cy="264" r="13"/>
+        </g>
+        <g fill="#d9c4a0" opacity=".72"><circle cx="264" cy="63" r="5"/><circle cx="276" cy="48" r="4"/><circle cx="291" cy="39" r="3"/><circle cx="496" cy="63" r="5"/><circle cx="484" cy="48" r="4"/><circle cx="469" cy="39" r="3"/></g>
+      </svg>
+      <div class="photo-caption"><span>Our story in bloom</span><small>A day made brighter by you</small></div>
+    </div>`;
     return;
   }
 
@@ -233,6 +271,8 @@ function renderPhoto() {
 
 function updateCountdown() {
   const target = new Date(invitation.date).getTime();
+  if (!Number.isFinite(target)) return;
+
   const remaining = Math.max(0, target - Date.now());
   const values = [
     Math.floor(remaining / 86_400_000),
@@ -245,6 +285,10 @@ function updateCountdown() {
   units.forEach((unit, index) => {
     getElement(unit).textContent = String(values[index]).padStart(2, '0');
   });
+
+  const countdown = document.querySelector('.countdown');
+  countdown.classList.add('is-ready');
+  countdown.setAttribute('aria-busy', 'false');
 }
 
 function showToast(message) {
@@ -262,7 +306,7 @@ function openMainInvitation() {
     screen.hidden = true;
     document.body.classList.remove('intro-active');
 
-    [getElement('topbar'), getElement('invitationMain'), document.querySelector('.footer')]
+    [getElement('invitationMain'), document.querySelector('.footer')]
       .forEach((element) => {
         element.removeAttribute('inert');
         element.removeAttribute('aria-hidden');
@@ -403,7 +447,6 @@ getElement('shareBtn').addEventListener('click', async () => {
   }
 });
 
-getElement('printBtn').addEventListener('click', () => window.print());
 getElement('openInvitation').addEventListener('click', openMainInvitation);
 getElement('envelopeTrigger').addEventListener('click', toggleEnvelope);
 getElement('closeLetter').addEventListener('click', () => getElement('envelopeTrigger').click());
