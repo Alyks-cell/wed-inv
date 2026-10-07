@@ -2153,3 +2153,188 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .intro-petal { z-index: 2; opacity: 0; }
 }
+
+/* Opening screen: a soft rose button with a slow, subtle light sweep. */
+.intro-open {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #a9756c !important;
+  background: linear-gradient(135deg, #b78379, #9d6962) !important;
+  color: #fffaf3 !important;
+  box-shadow: 0 7px 18px rgba(117, 68, 62, .2),
+    inset 0 1px 0 rgba(255, 250, 243, .28) !important;
+  transition: transform 260ms ease, box-shadow 320ms ease,
+    background 260ms ease;
+}
+.intro-open::after {
+  position: absolute;
+  z-index: -1;
+  top: -65%;
+  left: -75%;
+  width: 42%;
+  height: 230%;
+  background: linear-gradient(105deg, transparent, rgba(255, 253, 249, .58), transparent);
+  content: '';
+  pointer-events: none;
+  transform: skewX(-20deg);
+  animation: shine2 5.6s ease-in-out .6s infinite;
+}
+.intro-open:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #bd8d83, #aa746b) !important;
+  box-shadow: 0 10px 24px rgba(117, 68, 62, .27),
+    inset 0 1px 0 rgba(255, 250, 243, .34) !important;
+}
+.intro-open:focus-visible {
+  outline: 2px solid #806345;
+  outline-offset: 4px;
+}
+@keyframes shine2 {
+  0%, 68% { left: -75%; opacity: 0; }
+  74% { opacity: .75; }
+  100% { left: 140%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-open, .intro-open::after { animation: none !important; transition: none; }
+}
+
+/* Replace the cool blue photo outline with a fine white edge and a quiet sparkle. */
+.photo-frame {
+  outline-color: rgba(255, 255, 255, .96) !important;
+  box-shadow: 0 25px 75px rgba(70, 24, 27, .12),
+    0 0 0 1px rgba(255, 255, 255, .78);
+}
+.photo-frame::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border: 1px solid transparent;
+  background: linear-gradient(110deg,
+      rgba(255, 255, 255, .42) 0%,
+      rgba(255, 255, 255, .42) 38%,
+      rgba(255, 255, 255, .98) 50%,
+      rgba(255, 255, 255, .42) 62%,
+      rgba(255, 255, 255, .42) 100%) border-box;
+  background-size: 240% 100%;
+  background-position: 120% 0;
+  content: '';
+  pointer-events: none;
+  animation: photo-edge-shine 6s ease-in-out 1.2s infinite;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+@keyframes photo-edge-shine {
+  0%, 72% { background-position: 120% 0; opacity: .45; }
+  88% { opacity: 1; }
+  100% { background-position: -120% 0; opacity: .45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame::after { animation: none; background: rgba(255, 255, 255, .78) border-box; }
+}
+
+/* Champagne replaces the cool blue accents throughout the invitation. */
+:root { --palette-blue: #c5a474; --sage: #c5a474; }
+.brand-mark { border-color: #c5a474 !important; }
+.hero:before, .hero:after { color: #c5a474 !important; }
+.photo-frame { background: linear-gradient(135deg, #e5d3af, #f5efe1 55%, #c5a474); }
+.photo-empty { background: radial-gradient(ellipse at 50% 30%, #fbf8f0, #f5efe1 55%, #e5d3af); }
+.detail-icon { border-color: #c5a474 !important; background: #f2e9dc !important; }
+.detail-card:before { background: #c5a474 !important; }
+.button-quiet, .map-link { border-color: #c5a474 !important; }
+.rsvp input { border-color: rgba(197, 164, 116, .68) !important; }
+.rsvp input:focus { border-color: #b28a57 !important; box-shadow: 0 0 0 3px rgba(197, 164, 116, .18) !important; }
+.rsvp-choice.decline { border-color: #c5a474 !important; }
+.letter-corner-fold { background: linear-gradient(135deg, #e5d3af, #f5efe1 52%, #c5a474) !important; }
+.letter-actions .letter-close { border-color: #c5a474 !important; }
+.letter-actions .letter-close:hover:not(:disabled) { background: #f2e9dc !important; }
+.letter-skip:focus-visible, .footer-share:focus-visible,
+.button:focus-visible, .map-link:focus-visible, .rsvp-choice:focus-visible,
+.intro-open:focus-visible, .letter-close:focus-visible { outline-color: #b28a57 !important; }
+.envelope-trigger { border-color: #c5a474 !important; }
+.invitation-envelope.is-open .envelope-pocket {
+  background: linear-gradient(135deg, rgba(251, 248, 240, .42), transparent 48%),
+    linear-gradient(135deg, #e5d3af, #d8c39b 55%, #c5a474) !important;
+  filter: drop-shadow(0 -2px 3px rgba(89, 75, 69, .12));
+}
+.invitation-envelope.is-open .envelope-flap {
+  background: linear-gradient(155deg, #f5efe1 0%, #e5d3af 58%, #c5a474 100%) !important;
+}
+.envelope-hint { border-color: #c5a474 !important; }
+.intro-rule { background: #c5a474 !important; }
+.intro-petal { background: #c5a474 !important; }
+.intro-screen { background: radial-gradient(rgba(197, 164, 116, .14) .7px, transparent .8px), radial-gradient(ellipse at 50% 45%, #8b2931 0%, #790d16 58%, #5f0a12 100%) !important; }
+
+/* Petals drift behind the main invitation once the opening screen is dismissed. */
+#invitationMain { position: relative; isolation: isolate; }
+.main-petal-layer {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.main-petal {
+  position: absolute;
+  top: -18px;
+  left: var(--petal-x);
+  width: var(--petal-width, 8px);
+  height: var(--petal-height, 12px);
+  border-radius: 85% 0 85% 0;
+  opacity: 0;
+  background: var(--petal-color, #d9aaa0);
+  box-shadow: 0 1px 5px rgba(137, 103, 86, .12);
+  animation: petal-fall var(--petal-duration, 19s) linear var(--petal-delay, 0s) infinite;
+}
+body.intro-active .main-petal-layer { visibility: hidden; }
+body:not(.intro-active) .main-petal-layer { visibility: visible; }
+.main-petal.petal-one { --petal-x: 7%; --petal-duration: 18s; --petal-delay: -7s; --petal-drift: 54px; --petal-color: #d9aaa0; }
+.main-petal.petal-two { --petal-x: 19%; --petal-duration: 22s; --petal-delay: -15s; --petal-drift: -38px; --petal-color: #c5a474; --petal-width: 6px; }
+.main-petal.petal-three { --petal-x: 32%; --petal-duration: 17s; --petal-delay: -10s; --petal-drift: 32px; --petal-color: #ad9a87; }
+.main-petal.petal-four { --petal-x: 47%; --petal-duration: 24s; --petal-delay: -20s; --petal-drift: -46px; --petal-color: #c99086; --petal-width: 7px; --petal-height: 10px; }
+.main-petal.petal-five { --petal-x: 61%; --petal-duration: 20s; --petal-delay: -12s; --petal-drift: 42px; --petal-color: #d9aaa0; }
+.main-petal.petal-six { --petal-x: 73%; --petal-duration: 23s; --petal-delay: -5s; --petal-drift: -34px; --petal-color: #c5a474; --petal-width: 6px; }
+.main-petal.petal-seven { --petal-x: 86%; --petal-duration: 18s; --petal-delay: -17s; --petal-drift: 48px; --petal-color: #d9aaa0; }
+.main-petal.petal-eight { --petal-x: 96%; --petal-duration: 25s; --petal-delay: -9s; --petal-drift: -28px; --petal-color: #ad9a87; --petal-width: 7px; --petal-height: 10px; }
+@media (max-width: 620px) {
+  .main-petal { --petal-width: 6px; --petal-height: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .main-petal { display: none; animation: none; }
+}
+
+/* Footer share button: champagne edged, softly lit, and easy to spot. */
+.footer-share {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #c5a474 !important;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #8d2630, #6f111b) !important;
+  color: #faf6ef !important;
+  box-shadow: 0 6px 18px rgba(89, 25, 31, .18), inset 0 1px 0 rgba(255, 255, 255, .2);
+  transition: transform 240ms ease, box-shadow 280ms ease, background 240ms ease;
+}
+.footer-share::after {
+  position: absolute;
+  z-index: -1;
+  top: -65%;
+  left: -78%;
+  width: 44%;
+  height: 230%;
+  background: linear-gradient(105deg, transparent, rgba(255, 250, 235, .65), transparent);
+  content: '';
+  pointer-events: none;
+  transform: skewX(-20deg);
+  animation: shine2 6.2s ease-in-out 1s infinite;
+}
+.footer-share:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #9d343d, #7d1822) !important;
+  color: #fffaf3 !important;
+  box-shadow: 0 9px 22px rgba(89, 25, 31, .25), inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+@media (prefers-reduced-motion: reduce) {
+  .main-petal, .footer-share, .footer-share::after { animation: none !important; transition: none; }
+}
