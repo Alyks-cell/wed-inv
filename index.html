@@ -7,23 +7,83 @@
   <title>Ranelia &amp; Mark Jan — Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand"><span class="brand-mark">R&amp;M</span> Wedding Invitation</div>
-    <div class="top-actions"><button class="button button-quiet" id="printBtn">Print</button><button class="button button-solid" id="shareBtn">Share invite</button></div>
+<body class="intro-active">
+  <section class="intro-screen" id="introScreen" role="dialog" aria-modal="true" aria-labelledby="introNames">
+    <span class="intro-petal petal-one" aria-hidden="true"></span><span class="intro-petal petal-two" aria-hidden="true"></span><span class="intro-petal petal-three" aria-hidden="true"></span><span class="intro-petal petal-four" aria-hidden="true"></span><span class="intro-petal petal-five" aria-hidden="true"></span>
+    <div class="intro-card">
+      <svg class="intro-florals floral-left" viewBox="0 0 150 280" aria-hidden="true">
+        <path d="M12 265C42 214 45 150 117 25M37 228C19 194 18 175 17 153M57 186C92 168 106 145 119 116M75 145C45 125 37 101 34 80M95 104C119 91 132 70 139 52" fill="none" stroke="#ad9a87" stroke-width="2" stroke-linecap="round"/>
+        <g fill="#c5a474"><ellipse cx="20" cy="170" rx="7" ry="16" transform="rotate(-32 20 170)"/><ellipse cx="33" cy="194" rx="7" ry="15" transform="rotate(28 33 194)"/><ellipse cx="47" cy="128" rx="7" ry="16" transform="rotate(-48 47 128)"/><ellipse cx="62" cy="147" rx="7" ry="15" transform="rotate(42 62 147)"/><ellipse cx="115" cy="115" rx="6" ry="14" transform="rotate(-40 115 115)"/><ellipse cx="131" cy="74" rx="6" ry="13" transform="rotate(38 131 74)"/><ellipse cx="105" cy="46" rx="5" ry="11" transform="rotate(-30 105 46)"/></g>
+        <g fill="#d9aaa0"><circle cx="30" cy="102" r="21"/><circle cx="30" cy="102" r="13" fill="#b7867e"/><circle cx="77" cy="211" r="24"/><circle cx="77" cy="211" r="15" fill="#b7867e"/></g>
+        <g fill="#ead9c3"><circle cx="59" cy="158" r="15"/><circle cx="59" cy="158" r="8" fill="#b79b71"/><circle cx="120" cy="86" r="5"/><circle cx="132" cy="66" r="4"/><circle cx="123" cy="51" r="4"/><circle cx="140" cy="43" r="3"/></g>
+      </svg>
+      <svg class="intro-florals floral-right" viewBox="0 0 150 280" aria-hidden="true">
+        <path d="M12 265C42 214 45 150 117 25M37 228C19 194 18 175 17 153M57 186C92 168 106 145 119 116M75 145C45 125 37 101 34 80M95 104C119 91 132 70 139 52" fill="none" stroke="#ad9a87" stroke-width="2" stroke-linecap="round"/>
+        <g fill="#c5a474"><ellipse cx="20" cy="170" rx="7" ry="16" transform="rotate(-32 20 170)"/><ellipse cx="33" cy="194" rx="7" ry="15" transform="rotate(28 33 194)"/><ellipse cx="47" cy="128" rx="7" ry="16" transform="rotate(-48 47 128)"/><ellipse cx="62" cy="147" rx="7" ry="15" transform="rotate(42 62 147)"/><ellipse cx="115" cy="115" rx="6" ry="14" transform="rotate(-40 115 115)"/><ellipse cx="131" cy="74" rx="6" ry="13" transform="rotate(38 131 74)"/><ellipse cx="105" cy="46" rx="5" ry="11" transform="rotate(-30 105 46)"/></g>
+        <g fill="#d9aaa0"><circle cx="30" cy="102" r="21"/><circle cx="30" cy="102" r="13" fill="#b7867e"/><circle cx="77" cy="211" r="24"/><circle cx="77" cy="211" r="15" fill="#b7867e"/></g>
+        <g fill="#ead9c3"><circle cx="59" cy="158" r="15"/><circle cx="59" cy="158" r="8" fill="#b79b71"/><circle cx="120" cy="86" r="5"/><circle cx="132" cy="66" r="4"/><circle cx="123" cy="51" r="4"/><circle cx="140" cy="43" r="3"/></g>
+      </svg>
+      <div class="intro-seal" aria-hidden="true">♥</div>
+      <h1 id="introNames"><span id="openingNameOne">Ranelia Parigde</span><i>&amp;</i><span id="openingNameTwo">Mark Jan Villadar</span></h1>
+      <div class="intro-rule" aria-hidden="true"></div>
+      <p class="intro-date" id="openingDate">December 1, 2026</p>
+      <button class="intro-open" id="openInvitation" type="button">Open</button>
+    </div>
+  </section>
+  <header class="topbar" id="topbar" inert aria-hidden="true">
+    <div class="brand">
+      <span class="brand-mark">R&amp;M</span>
+      Wedding Invitation
+    </div>
+    <div class="top-actions">
+      <button class="button button-quiet" id="printBtn" type="button">Print</button>
+      <button class="button button-solid" id="shareBtn" type="button">Share invite</button>
+    </div>
   </header>
-  <main>
+
+  <main id="invitationMain" inert aria-hidden="true">
     <section class="hero">
       <div class="eyebrow">Together with our families</div>
-      <h1><span id="nameOne">Ranelia Parigde</span><span class="amp">&amp;</span><span id="nameTwo">Mark Jan Villadar</span></h1>
+      <h1 id="invitationHeading" tabindex="-1">
+        <span id="nameOne">Ranelia Parigde</span>
+        <span class="amp">&amp;</span>
+        <span id="nameTwo">Mark Jan Villadar</span>
+      </h1>
       <div class="hero-date" id="heroDate">Tuesday, December 1, 2026</div>
       <div class="ornament">✦</div>
     </section>
+    <section class="message reveal">
+      <div class="section-label">A letter for you</div>
+      <div class="invitation-envelope" id="invitationEnvelope">
+        <article class="letter-paper" id="letterPaper" aria-hidden="true" aria-label="Wedding invitation letter" tabindex="-1">
+          <span class="letter-preview-lines" aria-hidden="true"></span>
+          <span class="letter-corner-fold" aria-hidden="true"></span>
+          <div class="letter-inner">
+            <div class="wedding-message" id="message"></div>
+            <div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div>
+            <button class="letter-close" id="closeLetter" type="button" disabled>Close letter <span aria-hidden="true">↓</span></button>
+          </div>
+        </article>
+        <button class="envelope-trigger" id="envelopeTrigger" type="button" aria-expanded="false" aria-controls="letterPaper" aria-label="Open the wedding invitation">
+          <span class="envelope-flap" aria-hidden="true"></span>
+          <span class="envelope-pocket" aria-hidden="true"></span>
+          <span class="envelope-seal" aria-hidden="true">R <i>&amp;</i> M</span>
+          <span class="envelope-hint">Click to open</span>
+        </button>
+      </div>
+    </section>
     <article class="invitation">
-      <div class="photo-frame" id="photoFrame"><div class="photo-empty"><div><span>No photos, just love</span><small>A day made brighter by you</small></div></div></div>
+      <div class="photo-frame" id="photoFrame">
+        <div class="photo-empty">
+          <div>
+            <span>No photos, just love</span>
+            <small>A day made brighter by you</small>
+          </div>
+        </div>
+      </div>
       <section class="intro reveal">
-        <div class="section-label">With joyful hearts</div>
-        <p id="inviteText">We, Ranelia &amp; Mark Jan, invite you to celebrate our wedding day with us.</p>
+        <div class="section-label">Welcome</div>
+        <p id="inviteText">Please join us as we celebrate our wedding day.</p>
         <div class="countdown" aria-label="Wedding countdown">
           <div class="count-item"><div class="count-number" id="days">—</div><div class="count-unit">Days</div></div>
           <div class="count-item"><div class="count-number" id="hours">—</div><div class="count-unit">Hours</div></div>
@@ -38,7 +98,6 @@
         <div class="detail-card"><div class="detail-icon" aria-hidden="true">⌖</div><h2>Find us</h2><p id="location">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p><a class="map-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
         <div class="detail-card"><div class="detail-icon" aria-hidden="true">✿</div><h2>Dress code</h2><p id="dress">Floor-length dresses<br>Semi-formal attire</p><div class="palette-list" role="list" aria-label="Wedding color palette"><div class="palette-swatch" role="listitem"><span class="palette-dot blush"></span><span>Blush pink</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot beige"></span><span>Soft beige</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot ivory"></span><span>Warm ivory</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot champagne"></span><span>Champagne</span></div><div class="palette-swatch" role="listitem"><span class="palette-dot taupe"></span><span>Taupe</span></div></div></div>
       </section>
-      <section class="message reveal"><div class="section-label">Our invitation</div><div class="invitation-envelope" id="invitationEnvelope"><article class="letter-paper" id="letterPaper" aria-hidden="true" aria-label="Wedding invitation letter" tabindex="-1"><span class="letter-preview-lines" aria-hidden="true"></span><span class="letter-corner-fold" aria-hidden="true"></span><div class="letter-inner"><div class="wedding-message" id="message"></div><div class="signoff" id="signoff">With love, Ranelia &amp; Mark Jan</div><button class="letter-close" id="closeLetter" type="button" disabled>Close letter <span aria-hidden="true">↓</span></button></div></article><button class="envelope-trigger" id="envelopeTrigger" type="button" aria-expanded="false" aria-controls="letterPaper" aria-label="Open the wedding invitation"><span class="envelope-flap" aria-hidden="true"></span><span class="envelope-pocket" aria-hidden="true"></span><span class="envelope-seal" aria-hidden="true">R <i>&amp;</i> M</span><span class="envelope-hint">Click to open your invitation</span></button></div></section>
       <section class="rsvp reveal" aria-labelledby="rsvpTitle">
         <div class="rsvp-heading">
           <div class="rsvp-flower" aria-hidden="true">✧</div>
@@ -65,61 +124,8 @@
       </section>
     </article>
   </main>
-  <footer class="footer">Blush · Beige · Champagne · A day made brighter by you</footer>
+  <footer class="footer" inert aria-hidden="true">Blush · Beige · Champagne · A day made brighter by you</footer>
   <div class="toast" id="toast" role="status"></div>
-  <script>
-    // Change these values before publishing. Guests can view the invitation but cannot edit its published content.
-    const data={one:'Ranelia Parigde',two:'Mark Jan Villadar',date:'2026-12-01T15:00:00+08:00',photo:'',invite:'We, Ranelia & Mark Jan, invite you to celebrate our wedding day with us.',ceremony:'3:00 PM\nNew Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',reception:'5:00 PM\nReception to follow',location:'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',map:'https://www.google.com/maps/search/?api=1&query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines',dress:'Floor-length dresses\nSemi-formal attire',message:[
-      'With joyful hearts, we, Ranelia & Mark Jan, invite you to celebrate our wedding on December 1, 2026.',
-      'After years of love, laughter, and prayers, we are finally saying “I do”—and we can’t imagine this day without you.',
-      'As we keep our celebration intimate, we can only accommodate guests named on the invitation. We kindly ask for no plus ones.',
-      'Please RSVP on or before November 10, 2026 so we can reserve your seat.'
-    ]};
-    const $=id=>document.getElementById(id);
-    function prettyDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?'Set your date':new Intl.DateTimeFormat('en',{timeZone:'Asia/Manila',weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(d)}
-    function render(){ $('nameOne').textContent=data.one;$('nameTwo').textContent=data.two;$('heroDate').textContent=prettyDate(data.date);$('inviteText').textContent=data.invite;$('ceremony').textContent=data.ceremony;$('reception').textContent=data.reception;$('location').textContent=data.location;$('dress').textContent=data.dress;$('message').replaceChildren(...data.message.map(paragraph=>{const p=document.createElement('p');p.textContent=paragraph;return p}));$('signoff').textContent=`With love, ${data.one} & ${data.two}`;$('mapLink').href=data.map||'https://maps.google.com';$('mapLink').style.display=data.map?'inline-block':'none';
-      const frame=$('photoFrame');if(data.photo){frame.innerHTML='';const img=document.createElement('img');img.src=data.photo;img.alt=`${data.one} and ${data.two}`;frame.append(img)}else frame.innerHTML='<div class="photo-empty"><div><span>No photos, just love</span><small>A day made brighter by you</small></div></div>';tick() }
-    function tick(){const target=new Date(data.date).getTime(),left=Math.max(0,target-Date.now());const vals=[Math.floor(left/86400000),Math.floor(left%86400000/3600000),Math.floor(left%3600000/60000),Math.floor(left%60000/1000)];['days','hours','minutes','seconds'].forEach((id,i)=>$(id).textContent=String(vals[i]).padStart(2,'0'))}
-    function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300)}
-    $('shareBtn').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);toast('Invitation link copied')}catch{toast('Copy this page link from your browser address bar')}};
-    $('printBtn').onclick=()=>window.print();
-    $('envelopeTrigger').addEventListener('click',()=>{
-      const envelope=$('invitationEnvelope'),button=$('envelopeTrigger'),paper=$('letterPaper'),letterInner=paper.querySelector('.letter-inner');
-      if(envelope.dataset.animating==='true')return;
-      const isOpening=!envelope.classList.contains('is-open');
-      envelope.dataset.animating='true';
-      let transitionTimer;
-      const finishTransition=()=>{window.clearTimeout(transitionTimer);paper.removeEventListener('transitionend',onTransitionEnd);if(isOpening){paper.style.height='auto'}else{paper.style.height='';envelope.style.minHeight=''}delete envelope.dataset.animating};
-      const onTransitionEnd=event=>{if(isOpening&&event.target===paper&&event.propertyName==='height')paper.style.height='auto'};
-      paper.removeEventListener('transitionend',onTransitionEnd);
-      paper.addEventListener('transitionend',onTransitionEnd);
-      if(isOpening){
-        paper.style.height=`${paper.getBoundingClientRect().height}px`;
-        envelope.classList.add('is-open');
-        requestAnimationFrame(()=>{const expandedHeight=Math.max(400,Math.ceil(letterInner.getBoundingClientRect().height+2));paper.style.height=`${expandedHeight}px`});
-        paper.setAttribute('aria-hidden','false');
-        paper.focus({preventScroll:true});
-      }else{
-        envelope.style.minHeight=`${envelope.getBoundingClientRect().height}px`;
-        paper.style.height=`${paper.getBoundingClientRect().height}px`;
-        const closedHeight=getComputedStyle(paper).getPropertyValue('--closed-letter-height').trim()||'225px';
-        const closedEnvelopeHeight=getComputedStyle(envelope).getPropertyValue('--closed-envelope-min-height').trim()||'445px';
-        requestAnimationFrame(()=>{envelope.classList.remove('is-open');paper.style.height=closedHeight;envelope.style.minHeight=closedEnvelopeHeight});
-        paper.setAttribute('aria-hidden','true');
-        button.focus({preventScroll:true});
-      }
-      button.setAttribute('aria-expanded',String(isOpening));
-      button.setAttribute('aria-label',isOpening?'Wedding invitation is open':'Open the wedding invitation');
-      button.tabIndex=isOpening?-1:0;
-      $('closeLetter').disabled=!isOpening;
-      transitionTimer=window.setTimeout(finishTransition,isOpening?1400:1100);
-    });
-    $('closeLetter').addEventListener('click',()=>$('envelopeTrigger').click());
-    $('rsvpForm').addEventListener('submit',async event=>{event.preventDefault();const guest=$('guestName').value.trim();const response=event.submitter?.value;if(!guest||!response)return;const buttons=[...event.currentTarget.querySelectorAll('button[type="submit"]')];const status=$('rsvpStatus');buttons.forEach(button=>button.disabled=true);status.textContent='Sending your response…';try{await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:guest,response,company:$('company').value})})}catch{}status.textContent='Thank You!';event.currentTarget.reset();buttons.forEach(button=>button.disabled=false)});
-    render();setInterval(tick,1000);
-    document.body.classList.add('motion-ready');
-    const revealItems=document.querySelectorAll('.reveal,.detail-card');
-    if('IntersectionObserver' in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.12});revealItems.forEach(item=>{item.classList.add('reveal');revealObserver.observe(item)})}else revealItems.forEach(item=>item.classList.add('is-visible'));
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>

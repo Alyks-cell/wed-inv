@@ -349,6 +349,10 @@ body{background-color:var(--palette-ivory);background-image:radial-gradient(#ad9
   transition: min-height 800ms ease-in-out;
 }
 
+.invitation-envelope:not(.is-open) {
+  overflow: hidden;
+}
+
 .letter-paper {
   --closed-letter-height: 225px;
   position: absolute;
@@ -362,7 +366,7 @@ body{background-color:var(--palette-ivory);background-image:radial-gradient(#ad9
   background: linear-gradient(145deg, rgba(255, 253, 249, .98), rgba(251, 245, 235, .98)), repeating-linear-gradient(0deg, transparent 0 3px, rgba(150, 126, 104, .025) 3px 4px);
   box-shadow: 0 12px 26px rgba(92, 68, 50, 0.14);
   transform-origin: 50% 100%;
-  transform: perspective(900px) translateY(0) rotateX(2deg) scale(.85);
+  transform: perspective(900px) translateY(0) rotateX(0) scale(1);
   transition: height 1s ease-in-out, transform 800ms ease-in-out, box-shadow 700ms ease;
 }
 
@@ -407,6 +411,16 @@ body{background-color:var(--palette-ivory);background-image:radial-gradient(#ad9
   overflow: visible;
   transform: perspective(900px) translateY(-120px) rotateX(0) scale(1);
   transition-delay: 0s, 300ms, 0s;
+}
+
+.invitation-envelope.is-closing .letter-paper {
+  z-index: 1;
+  animation: letter-slide-into-envelope 1s ease-in-out both;
+}
+
+@keyframes letter-slide-into-envelope {
+  from { transform: perspective(900px) translateY(-120px) rotateX(0) scale(1); }
+  to { transform: perspective(900px) translateY(0) rotateX(0) scale(1); }
 }
 
 .invitation-envelope.is-open .letter-inner {
@@ -704,3 +718,440 @@ body{background-color:var(--palette-ivory);background-image:radial-gradient(#ad9
 .invitation-envelope.is-open .envelope-trigger::before {
   opacity: 0;
 }
+
+/* Welcome screen shown before the invitation page */
+body.intro-active { overflow: hidden; }
+
+.intro-screen[hidden] { display: none; }
+
+.intro-screen {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  padding: 24px;
+  background:
+    radial-gradient(rgba(173, 154, 135, .09) .7px, transparent .8px),
+    radial-gradient(ellipse at 50% 45%, #f7eee7 0%, #eee1d8 58%, #e5d6cd 100%);
+  background-size: 8px 8px, cover;
+  opacity: 1;
+  transition: opacity 520ms ease;
+}
+
+.intro-screen.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: min(100%, 750px);
+  min-height: min(525px, calc(100svh - 48px));
+  max-height: calc(100svh - 48px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 38px clamp(28px, 7vw, 76px) 36px;
+  border: 1px solid #dfd0c1;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #fffaf3, #f8f1e8 70%, #f3e9df);
+  box-shadow: 0 16px 40px rgba(91, 71, 56, .13);
+  color: #62534b;
+  text-align: center;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  transform: translateY(0);
+  transition: opacity 430ms ease, transform 520ms cubic-bezier(.22, .61, .36, 1);
+  animation: intro-card-arrive 800ms cubic-bezier(.22, .61, .36, 1) both;
+}
+
+.intro-screen.is-leaving .intro-card {
+  opacity: 0;
+  transform: translateY(-12px) scale(.99);
+}
+
+.intro-card::before {
+  position: absolute;
+  z-index: -1;
+  inset: 13px;
+  border: 1px solid rgba(173, 154, 135, .36);
+  border-radius: 4px;
+  content: '';
+  pointer-events: none;
+}
+
+.intro-florals {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  width: clamp(94px, 17vw, 145px);
+  height: 76%;
+  overflow: visible;
+  opacity: .76;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.floral-left { left: -12px; }
+.floral-right { right: -12px; transform: translateY(-50%) scaleX(-1); }
+
+.intro-seal {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  place-items: center;
+  margin-bottom: 22px;
+  border: 1px solid #c5a474;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #d9aaa0, #ad766d 76%);
+  box-shadow: 0 4px 11px rgba(91, 71, 56, .16), inset 0 0 0 4px rgba(255, 250, 243, .18);
+  color: #fff8ef;
+  font-size: 23px;
+}
+
+.intro-card h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px 0 0;
+  color: #594b45;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 6.2vw, 58px);
+  font-weight: 400;
+  line-height: .98;
+  text-wrap: balance;
+}
+
+.intro-card h1 span { max-width: 100%; overflow-wrap: anywhere; }
+.intro-card h1 i { margin: 5px 0; color: #a68762; font-size: .54em; font-style: italic; }
+
+.intro-rule {
+  width: 108px;
+  height: 1px;
+  margin: 20px auto 15px;
+  background: #d8c6b2;
+}
+
+.intro-date {
+  margin: 0;
+  color: #716158;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(19px, 2.5vw, 23px);
+  letter-spacing: .025em;
+}
+
+.intro-open {
+  min-width: 130px;
+  padding: 12px 28px;
+  border: 1px solid #b99a6b;
+  border-radius: 999px;
+  background: rgba(217, 170, 160, .16);
+  box-shadow: none;
+  color: #62534b;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.intro-open:hover {
+  transform: translateY(-2px);
+  background: rgba(217, 170, 160, .28);
+  box-shadow: 0 4px 12px rgba(91, 71, 56, .08);
+}
+
+.intro-open:focus-visible {
+  outline: 3px solid #ac8b63;
+  outline-offset: 4px;
+}
+
+.intro-petal {
+  position: absolute;
+  width: 9px;
+  height: 13px;
+  border-radius: 85% 0 85% 0;
+  opacity: .55;
+  animation: petal-drift 13s ease-in-out infinite alternate;
+}
+
+.petal-one { top: 20%; left: 19%; background: #d9aaa0; }
+.petal-two { top: 36%; right: 21%; background: #c5a474; animation-delay: -4s; }
+.petal-three { bottom: 22%; left: 28%; background: #ad9a87; animation-delay: -7s; }
+.petal-four { right: 13%; bottom: 29%; background: #c99086; animation-delay: -2s; }
+.petal-five { bottom: 8%; left: 51%; background: #d9aaa0; animation-delay: -9s; }
+
+@keyframes intro-card-arrive {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes petal-drift {
+  from { transform: translate3d(-5px, 8px, 0) rotate(-18deg); }
+  to { transform: translate3d(7px, -9px, 0) rotate(24deg); }
+}
+
+@media (max-width: 620px) {
+  .intro-screen { padding: 16px; }
+  .intro-card {
+    width: min(100%, 430px);
+    min-height: min(520px, calc(100svh - 32px));
+    max-height: calc(100svh - 32px);
+    padding: 36px 22px 32px;
+  }
+  .intro-card::before { inset: 9px; }
+  .intro-florals { top: 16%; width: 92px; height: 150px; opacity: .52; }
+  .floral-left { left: -20px; }
+  .floral-right { right: -20px; }
+  .intro-seal { width: 50px; height: 50px; flex-basis: 50px; margin-bottom: 18px; }
+  .intro-card h1 { position: relative; z-index: 1; font-size: clamp(35px, 10vw, 47px); }
+}
+
+@media (max-width: 360px) {
+  .intro-card { padding-inline: 16px; }
+  .intro-card h1 { font-size: 34px; }
+  .intro-florals { width: 75px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-card, .intro-petal { animation: none; }
+  .intro-screen, .intro-card, .intro-open { transition-duration: .01ms; }
+}
+
+/* Roomy responsive spacing */
+.hero {
+  padding: clamp(68px, 9vw, 118px) 24px clamp(52px, 7vw, 84px);
+}
+
+.hero h1 {
+  width: min(100%, 1000px);
+  font-size: clamp(44px, 7.2vw, 88px);
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.hero h1 span:not(.amp) { max-width: 100%; overflow-wrap: anywhere; }
+.hero-date { font-size: clamp(16px, 2vw, 20px); }
+
+.invitation {
+  width: min(100% - 40px, 960px);
+  padding: 0;
+  margin-bottom: 100px;
+}
+
+.photo-frame {
+  width: min(100%, 760px);
+  height: clamp(210px, 38vw, 380px);
+  margin: 0 auto clamp(72px, 9vw, 120px);
+}
+
+.intro {
+  max-width: 680px;
+  margin: 0 auto clamp(78px, 10vw, 130px);
+}
+
+.intro p {
+  max-width: 640px;
+  margin: 20px auto 0;
+  line-height: 1.65;
+}
+
+.countdown {
+  width: min(100%, 520px);
+  margin: 42px auto 0;
+  padding: 22px 0;
+}
+
+.intro .section-label:last-child { margin-top: clamp(58px, 7vw, 88px); }
+
+.details {
+  column-gap: clamp(24px, 5vw, 58px);
+  row-gap: clamp(18px, 3vw, 34px);
+}
+
+.detail-card {
+  min-width: 0;
+  min-height: 210px;
+  padding: clamp(28px, 4vw, 42px) clamp(20px, 3.5vw, 38px);
+}
+
+.detail-card p,
+.wedding-message p { overflow-wrap: anywhere; }
+
+.message {
+  width: min(100%, 700px);
+  margin: clamp(88px, 11vw, 140px) auto 0;
+  padding: 0 16px;
+}
+
+.message > .section-label { margin-bottom: 22px; }
+
+.invitation-envelope {
+  width: min(100%, 580px);
+  margin: 0 auto;
+}
+
+.rsvp {
+  width: min(100%, 720px);
+  margin: clamp(88px, 11vw, 140px) auto 0;
+}
+
+.footer { margin-top: clamp(70px, 9vw, 110px); }
+
+@media (min-width: 621px) and (max-width: 900px) {
+  .hero { padding: 72px 26px 58px; }
+  .invitation { width: min(100% - 52px, 820px); }
+  .photo-frame { height: clamp(260px, 42vw, 340px); margin-bottom: 78px; }
+  .intro { margin-bottom: 82px; }
+  .detail-card { min-height: 190px; padding: 30px 24px; }
+  .message, .rsvp { margin-top: 90px; }
+}
+
+@media (max-width: 620px) {
+  .hero { padding: 62px 16px 48px; }
+  .hero h1 { font-size: clamp(38px, 10vw, 58px); line-height: 1.02; }
+  .hero-date { font-size: 16px; letter-spacing: .08em; }
+  .invitation { width: min(100% - 36px, 540px); margin-bottom: 68px; }
+  .photo-frame { height: clamp(165px, 54vw, 250px); margin-bottom: 62px; }
+  .intro { margin-bottom: 72px; }
+  .intro p { font-size: clamp(21px, 6vw, 25px); line-height: 1.55; }
+  .countdown { margin-top: 32px; padding: 18px 0; }
+  .count-item { min-width: 0; }
+  .count-number { font-size: clamp(25px, 7vw, 31px); }
+  .count-unit { font-size: 8px; letter-spacing: .11em; }
+  .intro .section-label:last-child { margin-top: 52px; }
+  .details { grid-template-columns: minmax(0, 1fr); row-gap: 8px; }
+  .detail-card { min-height: 0; padding: 29px 14px 32px; }
+  .detail-card h2 { font-size: 25px; }
+  .palette-list { gap: 7px; }
+  .palette-swatch { min-width: 43px; }
+  .palette-dot { width: 37px; height: 29px; }
+  .message { margin-top: 78px; padding-inline: 5px; }
+  .message > .section-label { margin-bottom: 18px; }
+  .invitation-envelope { margin-top: 0; }
+  .rsvp { margin-top: 82px; }
+  .footer { margin-top: 68px; padding-inline: 18px; line-height: 1.8; }
+}
+
+@media (max-width: 380px) {
+  .topbar { padding-inline: 12px; }
+  .brand { gap: 6px; font-size: 9px; letter-spacing: .08em; }
+  .top-actions { gap: 6px; }
+  .top-actions .button { padding: 9px 10px; font-size: 10px; }
+  .hero h1 { font-size: clamp(34px, 9.6vw, 42px); }
+  .invitation { width: min(100% - 28px, 540px); }
+  .count-unit { font-size: 7px; }
+  .palette-list { gap: 5px; }
+  .palette-swatch { min-width: 39px; font-size: 7px; }
+  .palette-dot { width: 33px; height: 26px; }
+}
+
+/* Keep the photo area comfortably below the invitation envelope. */
+.photo-frame { margin-top: clamp(58px, 8vw, 92px); }
+
+/* High contrast wedding palette: burgundy, beige, ivory, and dusty blue. */
+:root {
+  --palette-burgundy: #790d16;
+  --palette-beige: #e5d3af;
+  --palette-ivory: #f5efe1;
+  --palette-blue: #aec4d4;
+  --ink: #790d16;
+  --muted: #63343a;
+  --green: #790d16;
+  --sage: #aec4d4;
+  --cream: #f5efe1;
+  --paper: #fbf8f0;
+  --gold: #9c6e3c;
+  --line: #d9c49d;
+  --shadow: 0 18px 48px rgba(70, 24, 27, .12);
+}
+
+body { color: var(--ink); background-color: var(--palette-ivory); }
+.topbar, .hero, .invitation, .footer { color: var(--ink); }
+.brand, .eyebrow, .section-label, .button-quiet, .map-link { color: var(--palette-burgundy); }
+.brand-mark { border-color: var(--palette-blue); color: var(--palette-burgundy); background: var(--paper); }
+.hero { background: radial-gradient(ellipse at 50% 0%, rgba(174, 196, 212, .42), transparent 68%); }
+.hero:before, .hero:after { color: #a9bcca; }
+.hero h1, .hero h2, .detail-card h2, .rsvp h2 { color: var(--palette-burgundy); }
+.hero h1 .amp, .ornament, .detail-icon, .rsvp-flower { color: #946b39; }
+.hero-date, .intro p, .wedding-message, .wedding-message p, .message blockquote,
+.detail-card p, .dress p, .rsvp-intro, .rsvp-field label, .rsvp-response legend,
+.guest-note, .rsvp-status, .footer, .count-unit { color: #63343a; }
+.photo-frame { background: linear-gradient(135deg, var(--palette-beige), var(--palette-ivory) 55%, var(--palette-blue)); outline-color: #9fb6c7; }
+.photo-empty { color: var(--palette-burgundy); background: radial-gradient(ellipse at 50% 30%, #fbf8f0, var(--palette-ivory) 55%, var(--palette-blue)); }
+.photo-empty span { color: var(--palette-burgundy); }
+.countdown, .count-item { border-color: #d9c49d; }
+.count-number { color: var(--palette-burgundy); }
+.detail-card { color: var(--ink); background: rgba(251, 248, 240, .96); border-color: #d9c49d; }
+.detail-icon { border-color: var(--palette-blue); background: #e8eef0; }
+.detail-card:before { background: var(--palette-blue); }
+.dress, .rsvp-heading { background: linear-gradient(135deg, #eee2c9, var(--palette-ivory)); border-color: #d9c49d; }
+.palette-swatch { color: var(--palette-burgundy); }
+.palette-dot { border-color: var(--paper); box-shadow: 0 0 0 1px rgba(121, 13, 22, .2); }
+.palette-dot.burgundy { background: var(--palette-burgundy); }
+.palette-dot.beige { background: var(--palette-beige); }
+.palette-dot.ivory { background: var(--palette-ivory); }
+.palette-dot.blue { background: var(--palette-blue); }
+.palette-dot.blush { background: #d9aaa0; }
+.palette-dot.beige { background: #ded2c4; }
+.palette-dot.ivory { background: #f8f2e7; }
+.palette-dot.champagne { background: #c5a474; }
+.palette-dot.taupe { background: #ad9a87; }
+.button-solid, .rsvp-choice:not(.decline), .intro-open { color: var(--palette-ivory); background: var(--palette-burgundy); border-color: var(--palette-burgundy); }
+.button-solid:hover, .rsvp-choice:not(.decline):hover, .intro-open:hover { color: var(--palette-ivory); background: #5f0a12; }
+.button-quiet { border-color: var(--palette-blue); }
+.button-quiet:hover, .rsvp-choice.decline:hover { background: #e6edf0; }
+.map-link { border-color: #9fb6c7; }
+.map-link:hover { color: #5f0a12; border-color: var(--palette-burgundy); }
+.rsvp { color: var(--ink); background: var(--paper); border-color: #d9c49d; }
+.rsvp-heading { border-color: #d9c49d; }
+.rsvp-deadline { color: var(--palette-burgundy); border-color: #c8b48f; background: var(--palette-ivory); }
+.deadline-dot { background: var(--palette-burgundy); }
+.rsvp-field label span { color: #63343a; }
+.rsvp input { color: var(--palette-burgundy); border-color: #b6c7d0; background: #fffdf7; }
+.rsvp input::placeholder { color: #76666a; opacity: 1; }
+.rsvp input:focus { border-color: #7898ae; box-shadow: 0 0 0 3px rgba(120, 152, 174, .24); }
+.rsvp-choice { color: var(--palette-ivory); background: var(--palette-burgundy); border-color: var(--palette-burgundy); }
+.rsvp-choice.decline { color: var(--palette-burgundy); background: var(--paper); border-color: #b6c7d0; }
+.rsvp-choice.decline:hover { color: var(--palette-burgundy); }
+.choice-icon { border-color: currentColor; }
+.guest-note, .rsvp-status { color: #63343a; }
+.wedding-message p:last-child { color: var(--palette-burgundy); border-color: #d9c49d; }
+.signoff { color: #805322; }
+.footer { border-color: #d9c49d; }
+.letter-paper { color: var(--palette-burgundy); border-color: #d9c49d; background: linear-gradient(145deg, #fbf8f0, var(--palette-ivory)); }
+.letter-preview-lines { background: repeating-linear-gradient(to bottom, transparent 0 22px, rgba(121, 13, 22, .4) 22px 23px); }
+.letter-corner-fold { background: linear-gradient(135deg, var(--palette-beige), var(--palette-ivory) 52%, var(--palette-blue)); }
+.letter-close { color: var(--palette-burgundy); border-color: #d9c49d; }
+.letter-close:hover:not(:disabled) { color: #5f0a12; }
+.envelope-trigger { color: var(--palette-burgundy); border-color: #b6c7d0; background: linear-gradient(145deg, #f3e7d0, #e5d3af 58%, #d5c39f); }
+.envelope-flap { background: linear-gradient(155deg, #fbf8f0 4%, #eee2c9 48%, #dfc99f 100%); }
+.envelope-pocket { background: linear-gradient(135deg, rgba(251, 248, 240, .35), transparent 48%), linear-gradient(135deg, #e5d3af, #d8c39b 55%, #cbb489); }
+.invitation-envelope.is-open .envelope-pocket {
+  background:
+    linear-gradient(135deg, rgba(251, 248, 240, .42), transparent 48%),
+    linear-gradient(135deg, #aec4d4 0%, #c4d3dc 52%, #e5d3af 100%);
+  filter: drop-shadow(0 -2px 3px rgba(54, 77, 91, .14));
+}
+.invitation-envelope.is-open .envelope-flap {
+  background: linear-gradient(155deg, #f5efe1 0%, #e5d3af 58%, #aec4d4 100%);
+}
+.envelope-seal { border-color: #5f0a12; background: radial-gradient(circle at 34% 28%, #a5333c, #790d16 76%); color: var(--palette-ivory); }
+.envelope-hint { color: var(--palette-burgundy); border-color: #b6c7d0; background: rgba(245, 239, 225, .96); }
+.intro-screen { background: radial-gradient(rgba(174, 196, 212, .14) .7px, transparent .8px), radial-gradient(ellipse at 50% 45%, #8b2931 0%, #790d16 58%, #5f0a12 100%); }
+.intro-card { color: var(--palette-burgundy); border-color: #d9c49d; background: linear-gradient(145deg, #fbf8f0, var(--palette-ivory) 70%, #eee2c9); }
+.intro-card h1 { color: var(--palette-burgundy); }
+.intro-card h1 i, .intro-date { color: #63343a; }
+.intro-seal { color: var(--palette-ivory); background: var(--palette-burgundy); }
+.intro-rule { background: #b6c7d0; }
+.intro-open { box-shadow: 0 7px 18px rgba(70, 8, 15, .22); }
+.intro-petal { background: var(--palette-blue); }
+.button:focus-visible, .map-link:focus-visible, .rsvp-choice:focus-visible, .intro-open:focus-visible, .letter-close:focus-visible { outline-color: var(--palette-blue); }
+.toast { color: var(--palette-ivory); background: var(--palette-burgundy); }
