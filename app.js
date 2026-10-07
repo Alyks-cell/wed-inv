@@ -72,7 +72,6 @@ function renderSignature() {
   const fullSignature = `${invitation.firstName} & ${invitation.secondName}`;
   signature.setAttribute('role', 'text');
   signature.setAttribute('aria-label', fullSignature);
-  signature.dataset.signature = fullSignature;
 
   const firstName = document.createElement('span');
   firstName.className = 'signature-name signature-name-first';
@@ -94,11 +93,9 @@ function renderSignature() {
 function resetLetterReveal() {
   clearLetterAnimationTimers();
   const paper = getElement('letterPaper');
-  paper.classList.remove('is-revealing', 'signature-revealed', 'reveal-complete', 'reveal-skipped', 'reveal-reduced');
+  paper.classList.remove('is-revealing', 'reveal-complete', 'reveal-skipped', 'reveal-reduced');
   delete paper.dataset.revealScheduled;
   paper.style.removeProperty('--signature-start');
-  paper.style.removeProperty('--signature-shimmer-delay');
-  paper.querySelector('.signoff').classList.remove('is-shimmering');
   getElement('closeLetter').disabled = true;
   getElement('letterContinue').disabled = true;
 }
@@ -109,8 +106,7 @@ function completeLetterReveal({ skipped = false, reduced = false } = {}) {
   paper.classList.remove('is-revealing');
   if (skipped) paper.classList.add('reveal-skipped');
   if (reduced) paper.classList.add('reveal-reduced');
-  paper.classList.add('signature-revealed', 'reveal-complete');
-  paper.querySelector('.signoff').classList.add('is-shimmering');
+  paper.classList.add('reveal-complete');
   getElement('closeLetter').disabled = false;
   getElement('letterContinue').disabled = false;
 }
@@ -142,12 +138,7 @@ function beginLetterReveal() {
 
   const bodyDuration = delay + 600 + Math.max(0, longestWord - 1) * 14;
   paper.style.setProperty('--signature-start', `${bodyDuration}ms`);
-  paper.style.setProperty('--signature-shimmer-delay', `${bodyDuration + 2100}ms`);
 
-  letterAnimationTimers.push(window.setTimeout(() => {
-    paper.classList.add('signature-revealed');
-    paper.querySelector('.signoff').classList.add('is-shimmering');
-  }, bodyDuration + 2100));
   letterAnimationTimers.push(window.setTimeout(() => {
     paper.classList.add('reveal-complete');
     getElement('closeLetter').disabled = false;
