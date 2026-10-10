@@ -5,16 +5,17 @@ const invitation = {
   date: '2026-12-01T15:00:00+08:00',
   // Used for the "Add to calendar" event end time.
   endDate: '2026-12-01T21:00:00+08:00',
-  photo: '',
   welcome: 'A new chapter begins on December 1, and it would mean so much to celebrate it with you. Thank you for being part of the story that brought us here.',
   ceremonyTime: '3:00 PM',
+  // First line is the church name; the rest is its address.
   ceremony: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
   receptionTime: '5:00 PM',
   reception: 'Dinner & celebration to follow',
   place: 'San Rafael · Miagao · Iloilo',
   location: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
   map: 'https://www.google.com/maps/search/?api=1&query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines',
-  dressCode: 'Semi-formal attire\nFloor-length dresses',
+  // First line is the dress code; the second is shown beneath it.
+  dressCode: 'Semi-formal\nFloor-length dresses',
   message: [
     'With joyful hearts we invite you to celebrate our wedding on December 1, 2026.',
     'After years of love and prayer we cannot imagine this day without you.',
@@ -270,10 +271,19 @@ function renderInvitation() {
   getElement('ceremonyTime').textContent = invitation.ceremonyTime;
   getElement('receptionTime').textContent = invitation.receptionTime;
   getElement('inviteText').textContent = invitation.welcome;
-  getElement('ceremony').textContent = invitation.ceremony;
+  const [venue, ...address] = invitation.ceremony.split('\n');
+  getElement('ceremonyVenue').textContent = venue;
+  getElement('ceremonyAddress').textContent = address.join('\n');
   getElement('reception').textContent = invitation.reception;
-  getElement('location').textContent = invitation.location;
-  getElement('dress').textContent = invitation.dressCode;
+  const [dress, ...dressNote] = invitation.dressCode.split('\n');
+  getElement('dress').textContent = dress;
+  getElement('dressNote').textContent = dressNote.join(' ');
+  getElement('ceremonyDate').textContent = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Manila',
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
   renderLetterMessage();
   renderSignature();
 
@@ -281,49 +291,8 @@ function renderInvitation() {
   mapLink.href = invitation.map || 'https://maps.google.com';
   mapLink.style.display = invitation.map ? 'inline-block' : 'none';
 
-  renderPhoto();
   renderCalendarLinks();
   updateCountdown();
-}
-
-function renderPhoto() {
-  const frame = getElement('photoFrame');
-
-  if (!invitation.photo) {
-    frame.innerHTML = `<div class="photo-empty">
-      <svg class="photo-botanical" viewBox="0 0 760 360" role="img" aria-label="Soft watercolor illustration of blush roses and delicate leaves">
-        <defs>
-          <linearGradient id="botanicalWash" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9aaa0" stop-opacity=".55"/><stop offset="1" stop-color="#c5a474" stop-opacity=".24"/></linearGradient>
-          <radialGradient id="roseWash"><stop stop-color="#f5e7dc"/><stop offset=".68" stop-color="#d9aaa0" stop-opacity=".75"/><stop offset="1" stop-color="#b7867e" stop-opacity=".48"/></radialGradient>
-        </defs>
-        <g fill="none" stroke="#8e9b83" stroke-width="2" stroke-linecap="round" opacity=".62">
-          <path d="M110 345C150 272 165 191 213 45M143 289C98 260 81 218 76 178M166 231C214 204 238 161 250 118M188 171C145 138 136 101 139 70M608 345C568 272 553 191 505 45M575 289C620 260 637 218 642 178M552 231C504 204 480 161 468 118M530 171C573 138 582 101 579 70"/>
-          <path d="M130 312L90 277M157 260L201 228M177 210L142 174M594 312L634 277M567 260L523 228M547 210L582 174"/>
-        </g>
-        <g fill="#aeb99e" opacity=".58">
-          <ellipse cx="95" cy="269" rx="10" ry="26" transform="rotate(-48 95 269)"/><ellipse cx="194" cy="230" rx="10" ry="25" transform="rotate(43 194 230)"/>
-          <ellipse cx="146" cy="170" rx="9" ry="23" transform="rotate(-48 146 170)"/><ellipse cx="622" cy="269" rx="10" ry="26" transform="rotate(48 622 269)"/>
-          <ellipse cx="526" cy="230" rx="10" ry="25" transform="rotate(-43 526 230)"/><ellipse cx="574" cy="170" rx="9" ry="23" transform="rotate(48 574 170)"/>
-        </g>
-        <g fill="url(#roseWash)" stroke="#b7867e" stroke-opacity=".32">
-          <circle cx="238" cy="105" r="37"/><circle cx="522" cy="105" r="37"/>
-          <circle cx="184" cy="264" r="27"/><circle cx="576" cy="264" r="27"/>
-        </g>
-        <g fill="url(#botanicalWash)">
-          <circle cx="238" cy="105" r="18"/><circle cx="522" cy="105" r="18"/>
-          <circle cx="184" cy="264" r="13"/><circle cx="576" cy="264" r="13"/>
-        </g>
-        <g fill="#d9c4a0" opacity=".72"><circle cx="264" cy="63" r="5"/><circle cx="276" cy="48" r="4"/><circle cx="291" cy="39" r="3"/><circle cx="496" cy="63" r="5"/><circle cx="484" cy="48" r="4"/><circle cx="469" cy="39" r="3"/></g>
-      </svg>
-      <div class="photo-caption"><span>Our story in bloom</span><small>A day made brighter by you</small></div>
-    </div>`;
-    return;
-  }
-
-  const image = document.createElement('img');
-  image.src = invitation.photo;
-  image.alt = `${invitation.firstName} and ${invitation.secondName}`;
-  frame.replaceChildren(image);
 }
 
 function updateCountdown() {

@@ -10,10 +10,11 @@
   <meta property="og:url" content="https://wed1-jade.vercel.app/">
   <meta property="og:title" content="Ranelia &amp; Mark Jan — You're invited">
   <meta property="og:description" content="December 1, 2026 · San Rafael, Miagao, Iloilo. Open your invitation and kindly reply by November 10.">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://wed1-jade.vercel.app/images/couple-lanterns.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="intro-active">
@@ -104,7 +105,23 @@
       <a class="hero-scroll" href="#welcome" aria-label="Scroll to the invitation details"><span></span></a>
     </header>
 
-    <div class="photo-frame reveal" id="photoFrame"></div>
+    <!-- Our story -->
+    <section class="gallery-section reveal" aria-labelledby="galleryTitle">
+      <h2 class="visually-hidden" id="galleryTitle">Our story</h2>
+      <div class="gallery">
+        <figure class="gallery-item gallery-item--side">
+          <img src="images/couple-lanterns.jpg" width="1200" height="1593" alt="Ranelia and Mark Jan smiling together under festival lanterns" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item gallery-item--center">
+          <img src="images/couple-together.jpg" width="1200" height="1593" alt="Ranelia resting her head on Mark Jan's shoulder" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item gallery-item--side">
+          <img src="images/couple-smiles.jpg" width="1200" height="1593" alt="Ranelia and Mark Jan smiling outside at night" loading="lazy" decoding="async">
+        </figure>
+      </div>
+      <p class="gallery-caption">Two hearts, one story — and you’re part of it.</p>
+      <p class="gallery-hint" aria-hidden="true">Swipe for more</p>
+    </section>
 
     <article class="invitation">
       <!-- I. Welcome -->
@@ -158,51 +175,59 @@
           <h2 id="dayTitle">The celebration</h2>
         </header>
 
-        <ol class="timeline">
-          <li class="timeline-item">
-            <span class="timeline-time" id="ceremonyTime">3:00 PM</span>
-            <span class="timeline-dot" aria-hidden="true"></span>
-            <div class="timeline-body">
-              <h3>The ceremony</h3>
-              <p id="ceremony">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-time" id="receptionTime">5:00 PM</span>
-            <span class="timeline-dot" aria-hidden="true"></span>
-            <div class="timeline-body">
-              <h3>The reception</h3>
-              <p id="reception">Dinner &amp; celebration to follow</p>
-            </div>
-          </li>
-        </ol>
+        <article class="ceremony-card">
+          <figure class="ceremony-photo">
+            <img src="images/church.jpg" width="1800" height="1350" alt="New Heights Fundamental Baptist Church, a pale blue chapel framed by palm trees and a garden path" loading="lazy" decoding="async">
+          </figure>
+          <div class="ceremony-body">
+            <span class="info-label">The ceremony</span>
+            <h3 class="ceremony-title">Wedding Ceremony</h3>
+            <p class="ceremony-when"><span id="ceremonyDate">Tuesday, December 1</span><span class="ceremony-dot" aria-hidden="true"></span><span id="ceremonyTime">3:00 PM</span></p>
 
-        <div class="info-grid">
-          <div class="info-panel">
-            <span class="info-label">Venue</span>
-            <p class="info-text" id="location">New Heights Fundamental Baptist Church<br>San Rafael, Miagao, Iloilo</p>
-            <div class="info-actions">
-              <a class="pill-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Get directions</a>
+            <div class="ceremony-venue-block">
+              <p class="ceremony-venue" id="ceremonyVenue">New Heights Fundamental Baptist Church</p>
+              <p class="ceremony-address" id="ceremonyAddress">San Rafael, Miagao, Iloilo</p>
             </div>
-            <div class="calendar-links">
-              <span class="calendar-label">Save to calendar</span>
-              <a class="text-link" id="googleCalendarLink" href="#" target="_blank" rel="noopener">Google</a>
-              <span aria-hidden="true">·</span>
-              <a class="text-link" id="icsCalendarLink" href="#" download="ranelia-mark-jan-wedding.ics">Apple / Outlook</a>
+
+            <div class="ceremony-actions">
+              <a class="pill-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Find the church</a>
+              <p class="calendar-links">
+                <span class="calendar-label">Add to calendar</span>
+                <a class="text-link" id="googleCalendarLink" href="#" target="_blank" rel="noopener">Google</a>
+                <span aria-hidden="true">·</span>
+                <a class="text-link" id="icsCalendarLink" href="#" download="ranelia-mark-jan-wedding.ics">Apple / Outlook</a>
+              </p>
             </div>
           </div>
-          <div class="info-panel">
-            <span class="info-label">Attire</span>
-            <p class="info-text" id="dress">Semi-formal attire<br>Floor-length dresses</p>
-            <p class="dress-note">Guests are warmly invited to wear these tones</p>
-            <ul class="palette-list" aria-label="Wedding color palette">
-              <li class="palette-swatch"><span class="palette-dot blush"></span><span>Blush</span></li>
-              <li class="palette-swatch"><span class="palette-dot beige"></span><span>Beige</span></li>
-              <li class="palette-swatch"><span class="palette-dot ivory"></span><span>Ivory</span></li>
-              <li class="palette-swatch"><span class="palette-dot champagne"></span><span>Champagne</span></li>
-              <li class="palette-swatch"><span class="palette-dot taupe"></span><span>Taupe</span></li>
-            </ul>
+        </article>
+
+        <dl class="details-strip">
+          <div class="detail">
+            <dt class="info-label">The reception</dt>
+            <dd class="detail-value" id="receptionTime">5:00 PM</dd>
+            <dd class="detail-note" id="reception">Dinner &amp; celebration to follow</dd>
           </div>
+          <div class="detail">
+            <dt class="info-label">Attire</dt>
+            <dd class="detail-value" id="dress">Semi-formal</dd>
+            <dd class="detail-note" id="dressNote">Floor-length dresses</dd>
+          </div>
+          <div class="detail">
+            <dt class="info-label">Kindly reply by</dt>
+            <dd class="detail-value">November 10</dd>
+            <dd class="detail-note"><a class="text-link" href="#rsvp">Send your RSVP</a></dd>
+          </div>
+        </dl>
+
+        <div class="palette">
+          <p class="palette-intro">Guests are warmly invited to wear these tones</p>
+          <ul class="palette-list" aria-label="Wedding color palette">
+            <li class="palette-swatch"><span class="palette-dot blush"></span><span>Blush</span></li>
+            <li class="palette-swatch"><span class="palette-dot beige"></span><span>Beige</span></li>
+            <li class="palette-swatch"><span class="palette-dot ivory"></span><span>Ivory</span></li>
+            <li class="palette-swatch"><span class="palette-dot champagne"></span><span>Champagne</span></li>
+            <li class="palette-swatch"><span class="palette-dot taupe"></span><span>Taupe</span></li>
+          </ul>
         </div>
       </section>
 
