@@ -3,13 +3,18 @@ const invitation = {
   firstName: 'Ranelia Parigde',
   secondName: 'Mark Jan Villadar',
   date: '2026-12-01T15:00:00+08:00',
+  // Used for the "Add to calendar" event end time.
+  endDate: '2026-12-01T21:00:00+08:00',
   photo: '',
   welcome: 'A new chapter begins on December 1, and it would mean so much to celebrate it with you. Thank you for being part of the story that brought us here.',
-  ceremony: '3:00 PM\nNew Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
-  reception: '5:00 PM\nReception to follow',
+  ceremonyTime: '3:00 PM',
+  ceremony: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
+  receptionTime: '5:00 PM',
+  reception: 'Dinner & celebration to follow',
+  place: 'San Rafael · Miagao · Iloilo',
   location: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
   map: 'https://www.google.com/maps/search/?api=1&query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines',
-  dressCode: 'Floor-length dresses\nSemi-formal attire',
+  dressCode: 'Semi-formal attire\nFloor-length dresses',
   message: [
     'With joyful hearts we invite you to celebrate our wedding on December 1, 2026.',
     'After years of love and prayer we cannot imagine this day without you.',
@@ -174,6 +179,63 @@ function formatFullDate(value) {
   }).format(date);
 }
 
+function toCalendarStamp(value) {
+  return new Date(value).toISOString().replace(/[-:]/gu, '').replace(/\.\d{3}/u, '');
+}
+
+function escapeIcsText(text) {
+  return text.replace(/[\\;,]/gu, (match) => `\\${match}`).replace(/\n/gu, '\\n');
+}
+
+function renderCalendarLinks() {
+  const start = new Date(invitation.date);
+  const end = new Date(invitation.endDate);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return;
+
+  const title = `${splitName(invitation.firstName).givenNames} & ${splitName(invitation.secondName).givenNames}'s Wedding`;
+  const location = invitation.location.replace(/\n/gu, ', ');
+  const details = `Ceremony, ${invitation.ceremonyTime}: ${invitation.ceremony.replace(/\n/gu, ', ')}\nReception, ${invitation.receptionTime}: ${invitation.reception.replace(/\n/gu, ', ')}\n${window.location.href}`;
+  const dates = `${toCalendarStamp(start)}/${toCalendarStamp(end)}`;
+
+  const googleParams = new URLSearchParams({ action: 'TEMPLATE', text: title, dates, location, details });
+  getElement('googleCalendarLink').href = `https://calendar.google.com/calendar/render?${googleParams}`;
+
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Wedding Invitation//EN',
+    'BEGIN:VEVENT',
+    `UID:${toCalendarStamp(start)}-wedding@invitation`,
+    `DTSTAMP:${toCalendarStamp(new Date())}`,
+    `DTSTART:${toCalendarStamp(start)}`,
+    `DTEND:${toCalendarStamp(end)}`,
+    `SUMMARY:${escapeIcsText(title)}`,
+    `LOCATION:${escapeIcsText(location)}`,
+    `DESCRIPTION:${escapeIcsText(details)}`,
+    'BEGIN:VALARM',
+    'TRIGGER:-P1D',
+    'ACTION:DISPLAY',
+    `DESCRIPTION:${escapeIcsText(title)} is tomorrow`,
+    'END:VALARM',
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+  getElement('icsCalendarLink').href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+}
+
+function renderDateLockup(date) {
+  if (Number.isNaN(date.getTime())) return;
+
+  const part = (options) => new Intl.DateTimeFormat('en', { timeZone: 'Asia/Manila', ...options }).format(date);
+  const time = part({ hour: 'numeric', minute: '2-digit' });
+  getElement('heroWeekday').textContent = part({ weekday: 'long' });
+  getElement('heroMonth').textContent = part({ month: 'long' });
+  getElement('heroDay').textContent = part({ day: '2-digit' });
+  getElement('heroYear').textContent = part({ year: 'numeric' });
+  getElement('heroTime').textContent = time;
+  document.querySelector('.date-lockup').setAttribute('aria-label', `${formatFullDate(invitation.date)} at ${time}`);
+}
+
 function splitName(name) {
   const parts = name.trim().split(/\s+/u);
   return {
@@ -203,7 +265,10 @@ function renderInvitation() {
     day: 'numeric',
     year: 'numeric',
   }).format(date);
-  getElement('heroDate').textContent = formatFullDate(invitation.date);
+  renderDateLockup(date);
+  getElement('heroPlace').textContent = invitation.place;
+  getElement('ceremonyTime').textContent = invitation.ceremonyTime;
+  getElement('receptionTime').textContent = invitation.receptionTime;
   getElement('inviteText').textContent = invitation.welcome;
   getElement('ceremony').textContent = invitation.ceremony;
   getElement('reception').textContent = invitation.reception;
@@ -217,6 +282,7 @@ function renderInvitation() {
   mapLink.style.display = invitation.map ? 'inline-block' : 'none';
 
   renderPhoto();
+  renderCalendarLinks();
   updateCountdown();
 }
 
@@ -265,6 +331,18 @@ function updateCountdown() {
   if (!Number.isFinite(target)) return;
 
   const remaining = Math.max(0, target - Date.now());
+  const countdown = document.querySelector('.countdown');
+  if (remaining === 0) {
+    window.clearInterval(countdownTimer);
+    const celebration = document.createElement('p');
+    celebration.className = 'countdown-done';
+    celebration.textContent = Date.now() - target < 86_400_000 ? 'Today is the day!' : 'Thank you for celebrating with us.';
+    countdown.replaceChildren(celebration);
+    countdown.classList.add('is-ready');
+    countdown.setAttribute('aria-busy', 'false');
+    return;
+  }
+
   const values = [
     Math.floor(remaining / 86_400_000),
     Math.floor((remaining % 86_400_000) / 3_600_000),
@@ -277,7 +355,6 @@ function updateCountdown() {
     getElement(unit).textContent = String(values[index]).padStart(2, '0');
   });
 
-  const countdown = document.querySelector('.countdown');
   countdown.classList.add('is-ready');
   countdown.setAttribute('aria-busy', 'false');
 }
@@ -291,11 +368,12 @@ function showToast(message) {
 
 function openMainInvitation() {
   const screen = getElement('introScreen');
-  screen.classList.add('is-leaving');
+  if (screen.classList.contains('is-opening')) return;
 
-  window.setTimeout(() => {
+  const revealMainPage = () => {
     screen.hidden = true;
     document.body.classList.remove('intro-active');
+    document.body.classList.add('is-revealed');
 
     [getElement('invitationMain'), document.querySelector('.footer')]
       .forEach((element) => {
@@ -304,7 +382,53 @@ function openMainInvitation() {
       });
 
     getElement('invitationHeading').focus({ preventScroll: true });
-  }, 540);
+  };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.body.classList.add('is-revealed');
+    screen.classList.add('is-leaving');
+    window.setTimeout(revealMainPage, 20);
+    return;
+  }
+
+  const openButton = getElement('openInvitation');
+  const letterCard = screen.querySelector('.intro-letter-card');
+  openButton.disabled = true;
+  screen.classList.add('is-opening');
+
+  window.setTimeout(() => {
+    screen.classList.add('is-extracting');
+  }, 700);
+
+  window.setTimeout(() => {
+    const bounds = letterCard.getBoundingClientRect();
+    letterCard.style.transition = 'none';
+    letterCard.style.position = 'fixed';
+    letterCard.style.left = `${bounds.left}px`;
+    letterCard.style.top = `${bounds.top}px`;
+    letterCard.style.width = `${bounds.width}px`;
+    letterCard.style.height = `${bounds.height}px`;
+    letterCard.style.margin = '0';
+    letterCard.style.transform = 'none';
+    letterCard.style.zIndex = '30';
+    void letterCard.offsetWidth;
+    window.requestAnimationFrame(() => {
+      screen.classList.add('is-zooming');
+      letterCard.style.transition = '';
+      letterCard.style.left = '0';
+      letterCard.style.top = '0';
+      letterCard.style.width = '100vw';
+      letterCard.style.height = '100vh';
+      letterCard.style.borderRadius = '0';
+    });
+
+    window.setTimeout(() => {
+      screen.classList.add('is-leaving');
+      document.body.classList.add('is-revealed');
+    }, 1300);
+  }, 1900);
+
+  window.setTimeout(revealMainPage, 4000);
 }
 
 function toggleEnvelope() {
@@ -395,20 +519,35 @@ function handleRsvp(event) {
   buttons.forEach((button) => { button.disabled = true; });
   status.textContent = 'Sending your response...';
 
+  status.classList.remove('is-error');
+
   fetch('/api/rsvp', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: guestName, response, company: getElement('company').value }),
-  }).catch(() => {}).finally(() => {
-    status.textContent = 'Thank You!';
+  }).then(async (result) => {
+    if (!result.ok) {
+      const body = await result.json().catch(() => ({}));
+      throw new Error(result.status === 400 && body.error ? body.error : '');
+    }
+
+    const firstName = guestName.split(/\s+/u)[0];
+    status.textContent = response === 'accept'
+      ? `Thank you, ${firstName}! We can’t wait to celebrate with you.`
+      : `Thank you for letting us know, ${firstName}. You’ll be missed!`;
     form.reset();
+  }).catch((error) => {
+    status.classList.add('is-error');
+    status.textContent = error.message
+      || 'We couldn’t save your response. Please check your connection and try again, or message us directly.';
+  }).finally(() => {
     buttons.forEach((button) => { button.disabled = false; });
   });
 }
 
 function revealSections() {
   document.body.classList.add('motion-ready');
-  const items = document.querySelectorAll('.reveal, .detail-card');
+  const items = document.querySelectorAll('.reveal');
 
   if (!('IntersectionObserver' in window)) {
     items.forEach((item) => item.classList.add('is-visible'));
@@ -421,15 +560,21 @@ function revealSections() {
       entry.target.classList.add('is-visible');
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
-  items.forEach((item) => {
-    item.classList.add('reveal');
-    observer.observe(item);
-  });
+  items.forEach((item) => observer.observe(item));
 }
 
 getElement('shareBtn').addEventListener('click', async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: document.title, text: 'You’re invited to our wedding!', url: window.location.href });
+      return;
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+    }
+  }
+
   try {
     await navigator.clipboard.writeText(window.location.href);
     showToast('Invitation link copied');
@@ -452,6 +597,6 @@ getElement('letterContinue').addEventListener('click', () => {
 });
 getElement('rsvpForm').addEventListener('submit', handleRsvp);
 
+const countdownTimer = window.setInterval(updateCountdown, 1000);
 renderInvitation();
-window.setInterval(updateCountdown, 1000);
 revealSections();

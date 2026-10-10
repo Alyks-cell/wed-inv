@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, '');
   const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!supabaseUrl || !supabasePublishableKey) {
-    return sendJson(res, 503, { error: 'Thank You!.' });
+    return sendJson(res, 503, { error: 'RSVP is temporarily unavailable.' });
   }
 
   try {
@@ -58,12 +58,12 @@ export default async function handler(req, res) {
 
     if (!result.ok) {
       console.error('RSVP database insert failed with status:', result.status);
-      return sendJson(res, 502, { error: 'Thank You!' });
+      return sendJson(res, 502, { error: 'Could not save your RSVP.' });
     }
 
     return sendJson(res, 201, { ok: true });
   } catch (error) {
     console.error('RSVP database request failed:', error?.name || 'UnknownError');
-    return sendJson(res, 502, { error: 'Thank You!' });
+    return sendJson(res, 502, { error: 'Could not save your RSVP.' });
   }
 }
