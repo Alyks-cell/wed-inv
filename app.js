@@ -335,9 +335,81 @@ function showToast(message) {
   window.setTimeout(() => toast.classList.remove('show'), 2300);
 }
 
+// Background music: browsers only allow sound after a tap, so it starts
+// from the "Open invitation" click and fades in rather than cutting in.
+const music = getElement('bgMusic');
+const musicToggle = getElement('musicToggle');
+const MUSIC_VOLUME = 0.55;
+let musicFadeFrame = 0;
+let musicWanted = false;
+let musicResumeOnReturn = false;
+
+function fadeMusic(to, duration, onDone) {
+  window.cancelAnimationFrame(musicFadeFrame);
+  const from = music.volume;
+  const start = performance.now();
+  const step = (now) => {
+    const progress = Math.min(1, (now - start) / duration);
+    music.volume = from + (to - from) * progress;
+    if (progress < 1) musicFadeFrame = window.requestAnimationFrame(step);
+    else if (onDone) onDone();
+  };
+  musicFadeFrame = window.requestAnimationFrame(step);
+}
+
+function updateMusicToggle() {
+  const playing = !music.paused;
+  musicToggle.classList.toggle('is-playing', playing);
+  musicToggle.setAttribute('aria-pressed', String(playing));
+  musicToggle.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+}
+
+function playMusic(fadeDuration = 1200) {
+  musicWanted = true;
+  music.volume = 0;
+  music.play()
+    .then(() => fadeMusic(MUSIC_VOLUME, fadeDuration))
+    .catch(() => { musicWanted = false; })
+    .finally(updateMusicToggle);
+}
+
+function pauseMusic() {
+  musicWanted = false;
+  fadeMusic(0, 500, () => {
+    music.pause();
+    updateMusicToggle();
+  });
+}
+
+function startMusic() {
+  musicToggle.hidden = false;
+  playMusic(3000);
+}
+
+musicToggle.addEventListener('click', () => {
+  if (musicWanted) pauseMusic();
+  else playMusic();
+});
+
+music.addEventListener('pause', updateMusicToggle);
+music.addEventListener('play', updateMusicToggle);
+
+// Pause while the guest is in another tab or has locked their phone.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    musicResumeOnReturn = musicWanted && !music.paused;
+    if (musicResumeOnReturn) music.pause();
+  } else if (musicResumeOnReturn) {
+    musicResumeOnReturn = false;
+    playMusic(800);
+  }
+});
+
 function openMainInvitation() {
   const screen = getElement('introScreen');
   if (screen.classList.contains('is-opening')) return;
+
+  startMusic();
 
   const revealMainPage = () => {
     screen.hidden = true;
