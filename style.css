@@ -803,13 +803,13 @@ body.is-revealed .hero-bloom-right { animation-delay: 1.4s; animation-duration: 
 .attire-guide-heading h3 { margin: 12px 0 0; color: var(--ink); font: 400 clamp(30px, 3.4vw, 42px)/1.12 var(--display); }
 .attire-guide-heading p { margin: 12px 0 0; color: var(--ink-soft); font: italic 400 18px/1.5 var(--serif); }
 .attire-role-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: clamp(28px, 4vw, 40px); }
-.attire-role { display: flex; min-height: 82px; align-items: center; gap: 13px; padding: 14px; background: transparent; }
+.attire-role { display: grid; min-width: 0; min-height: 82px; grid-template-columns: 27px minmax(0, 1fr); align-items: center; gap: 13px; padding: 14px 18px; background: transparent; text-align: left; }
 .attire-role + .attire-role { border-left: 1px solid var(--line); }
 .attire-role-dot { width: 27px; height: 27px; flex: 0 0 27px; border: 1px solid rgba(51, 41, 42, .12); border-radius: 50%; box-shadow: 0 0 0 4px var(--card); }
 .attire-role-dot.blush-pink { background: #e8c4c5; }
 .attire-role-dot.dusty-pink { background: #ca9299; }
 .attire-role-dot.mauve { background: #a67b91; }
-.attire-role-copy { display: flex; flex-direction: column; gap: 5px; color: var(--muted); font: 500 10px/1.25 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+.attire-role-copy { display: flex; min-width: 0; flex-direction: column; gap: 5px; color: var(--muted); font: 500 10px/1.25 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
 .attire-role-copy strong { color: var(--ink); font: 500 17px/1.2 var(--serif); letter-spacing: 0; text-transform: none; }
 .attire-guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2vw, 20px); margin-top: clamp(26px, 3.5vw, 36px); }
 .attire-guide { display: block; overflow: hidden; padding: 8px; border: 1px solid var(--gold-soft); background: var(--card); box-shadow: 0 8px 24px rgba(69, 49, 39, .08); outline-offset: 4px; transition: transform .35s var(--ease-out), box-shadow .35s var(--ease); }
