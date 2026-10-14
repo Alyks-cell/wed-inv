@@ -11,6 +11,9 @@ const invitation = {
   ceremony: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
   receptionTime: '5:00 PM',
   reception: 'Dinner & celebration to follow',
+  receptionVenue: 'Justice Ramon B. Britanico Memorial Hall',
+  receptionAddress: 'Miagao, Iloilo',
+  receptionMap: 'https://www.google.com/maps/search/?api=1&query=Justice+Ramon+B.+Britanico+Memorial+Hall%2C+Miagao%2C+Iloilo%2C+Philippines',
   place: 'San Rafael · Miagao · Iloilo',
   location: 'New Heights Fundamental Baptist Church\nSan Rafael, Miagao, Iloilo',
   map: 'https://www.google.com/maps/search/?api=1&query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines',
@@ -270,11 +273,14 @@ function renderInvitation() {
   getElement('heroPlace').textContent = invitation.place;
   getElement('ceremonyTime').textContent = invitation.ceremonyTime;
   getElement('receptionTime').textContent = invitation.receptionTime;
+  getElement('receptionTimeCard').textContent = invitation.receptionTime;
   getElement('inviteText').textContent = invitation.welcome;
   const [venue, ...address] = invitation.ceremony.split('\n');
   getElement('ceremonyVenue').textContent = venue;
   getElement('ceremonyAddress').textContent = address.join('\n');
   getElement('reception').textContent = invitation.reception;
+  getElement('receptionVenue').textContent = invitation.receptionVenue;
+  getElement('receptionAddress').textContent = invitation.receptionAddress;
   const [dress, ...dressNote] = invitation.dressCode.split('\n');
   getElement('dress').textContent = dress;
   getElement('dressNote').textContent = dressNote.join(' ');
@@ -290,6 +296,10 @@ function renderInvitation() {
   const mapLink = getElement('mapLink');
   mapLink.href = invitation.map || 'https://maps.google.com';
   mapLink.style.display = invitation.map ? 'inline-block' : 'none';
+
+  const receptionMapLink = getElement('receptionMapLink');
+  receptionMapLink.href = invitation.receptionMap || 'https://maps.google.com';
+  receptionMapLink.style.display = invitation.receptionMap ? 'inline-block' : 'none';
 
   renderCalendarLinks();
   updateCountdown();
