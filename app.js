@@ -191,10 +191,57 @@ function escapeIcsText(text) {
   return text.replace(/[\\;,]/gu, (match) => `\\${match}`).replace(/\n/gu, '\\n');
 }
 
+function renderMiniCalendar(date) {
+  const dateParts = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Manila',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  }).formatToParts(date);
+  const part = (type) => Number(dateParts.find((item) => item.type === type).value);
+  const year = part('year');
+  const month = part('month');
+  const day = part('day');
+  const monthDate = new Date(Date.UTC(year, month - 1, 1, 12));
+  const monthName = new Intl.DateTimeFormat('en', { month: 'long', timeZone: 'UTC' }).format(monthDate);
+  const startOffset = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  const days = getElement('calendarDays');
+  const fragment = document.createDocumentFragment();
+
+  getElement('calendarMonth').textContent = `${monthName} ${year}`;
+  getElement('calendarEventDate').textContent = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Manila',
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+
+  for (let slot = 0; slot < startOffset; slot += 1) {
+    const blank = document.createElement('li');
+    blank.setAttribute('aria-hidden', 'true');
+    fragment.append(blank);
+  }
+
+  for (let calendarDay = 1; calendarDay <= daysInMonth; calendarDay += 1) {
+    const cell = document.createElement('li');
+    cell.textContent = String(calendarDay);
+    if (calendarDay === day) {
+      cell.className = 'is-event-day';
+      cell.setAttribute('aria-label', `Wedding day, ${getElement('calendarEventDate').textContent}`);
+    }
+    fragment.append(cell);
+  }
+
+  days.replaceChildren(fragment);
+}
+
 function renderCalendarLinks() {
   const start = new Date(invitation.date);
   const end = new Date(invitation.endDate);
   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return;
+  renderMiniCalendar(start);
 
   const title = `${splitName(invitation.firstName).givenNames} & ${splitName(invitation.secondName).givenNames}'s Wedding`;
   const location = invitation.location.replace(/\n/gu, ', ');
@@ -272,24 +319,20 @@ function renderInvitation() {
   renderDateLockup(date);
   getElement('heroPlace').textContent = invitation.place;
   getElement('ceremonyTime').textContent = invitation.ceremonyTime;
-  getElement('receptionTime').textContent = invitation.receptionTime;
   getElement('receptionTimeCard').textContent = invitation.receptionTime;
   getElement('inviteText').textContent = invitation.welcome;
   const [venue, ...address] = invitation.ceremony.split('\n');
   getElement('ceremonyVenue').textContent = venue;
   getElement('ceremonyAddress').textContent = address.join('\n');
-  getElement('reception').textContent = invitation.reception;
   getElement('receptionVenue').textContent = invitation.receptionVenue;
   getElement('receptionAddress').textContent = invitation.receptionAddress;
-  const [dress, ...dressNote] = invitation.dressCode.split('\n');
-  getElement('dress').textContent = dress;
-  getElement('dressNote').textContent = dressNote.join(' ');
   getElement('ceremonyDate').textContent = new Intl.DateTimeFormat('en', {
     timeZone: 'Asia/Manila',
     weekday: 'long',
     month: 'long',
     day: 'numeric',
   }).format(date);
+  getElement('receptionDate').textContent = getElement('ceremonyDate').textContent;
   renderLetterMessage();
   renderSignature();
 

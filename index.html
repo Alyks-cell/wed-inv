@@ -110,7 +110,11 @@
       <h2 class="visually-hidden" id="galleryTitle">Our story</h2>
       <div class="gallery">
         <figure class="gallery-item">
-          <img src="images/couple.jpg" width="1376" height="1824" alt="Ranelia and Mark Jan together, surrounded by soft watercolor flowers" loading="lazy" decoding="async">
+          <span class="frame-corner tl" aria-hidden="true"></span><span class="frame-corner tr" aria-hidden="true"></span>
+          <span class="frame-corner bl" aria-hidden="true"></span><span class="frame-corner br" aria-hidden="true"></span>
+          <div class="frame-mat">
+            <img src="images/couple.jpg" width="1376" height="1824" alt="Ranelia and Mark Jan together, surrounded by soft watercolor flowers" loading="lazy" decoding="async">
+          </div>
         </figure>
       </div>
       <p class="gallery-caption">Two hearts, one story — and you’re part of it.</p>
@@ -168,50 +172,59 @@
           <h2 id="dayTitle">The celebration</h2>
         </header>
 
-        <article class="ceremony-card">
-          <figure class="ceremony-photo">
-            <img src="images/church.jpg" width="1800" height="1350" alt="New Heights Fundamental Baptist Church, a pale blue chapel framed by palm trees and a garden path" loading="lazy" decoding="async">
-          </figure>
-          <div class="ceremony-body">
-            <span class="info-label">The ceremony</span>
-            <h3 class="ceremony-title">Wedding Ceremony</h3>
-            <p class="ceremony-when"><span id="ceremonyDate">Tuesday, December 1</span><span class="ceremony-dot" aria-hidden="true"></span><span id="ceremonyTime">3:00 PM</span></p>
-
-            <div class="ceremony-venue-block">
-              <p class="ceremony-venue" id="ceremonyVenue">New Heights Fundamental Baptist Church</p>
-              <p class="ceremony-address" id="ceremonyAddress">San Rafael, Miagao, Iloilo</p>
-            </div>
-
-            <div class="ceremony-actions">
+        <div class="venue-grid">
+          <article class="venue-card">
+            <figure class="venue-photo">
+              <img src="images/church.jpg" width="1800" height="1350" alt="New Heights Fundamental Baptist Church, a pale blue chapel framed by palm trees and a garden path" loading="lazy" decoding="async">
+            </figure>
+            <div class="venue-body">
+              <h3 class="venue-title">Wedding Ceremony</h3>
+              <dl class="venue-facts">
+                <div><dt>Date</dt><dd id="ceremonyDate">Tuesday, December 1</dd></div>
+                <div><dt>Time</dt><dd id="ceremonyTime">3:00 PM</dd></div>
+                <div><dt>Venue</dt><dd><strong id="ceremonyVenue">New Heights Fundamental Baptist Church</strong><span id="ceremonyAddress">San Rafael, Miagao, Iloilo</span></dd></div>
+              </dl>
               <a class="pill-link" id="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=New+Heights+Fundamental+Baptist+Church%2C+San+Rafael%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Find the church</a>
-              <p class="calendar-links">
-                <span class="calendar-label">Add to calendar</span>
-                <a class="text-link" id="googleCalendarLink" href="#" target="_blank" rel="noopener">Google</a>
-                <span aria-hidden="true">·</span>
-                <a class="text-link" id="icsCalendarLink" href="#" download="ranelia-mark-jan-wedding.ics">Apple / Outlook</a>
-              </p>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="ceremony-card reception-card">
-          <figure class="ceremony-photo">
-            <img src="images/cultural-hall.jpg" width="2848" height="1504" alt="Cultural Hall, the reception venue in Miagao, Iloilo" loading="lazy" decoding="async">
-            <figcaption class="venue-photo-caption">Cultural Hall</figcaption>
-          </figure>
-          <div class="ceremony-body">
-            <span class="info-label">The reception</span>
-            <h3 class="ceremony-title">Wedding Reception</h3>
-            <p class="ceremony-when"><span id="receptionTimeCard">5:00 PM</span></p>
-            <div class="ceremony-venue-block">
-              <p class="ceremony-venue" id="receptionVenue">Justice Ramon B. Britanico Memorial Hall</p>
-              <p class="ceremony-address" id="receptionAddress">Miagao, Iloilo</p>
-            </div>
-            <div class="ceremony-actions">
+          <article class="venue-card">
+            <figure class="venue-photo">
+              <img src="images/cultural-hall.jpg" width="2848" height="1504" alt="The reception venue in Miagao, Iloilo" loading="lazy" decoding="async">
+            </figure>
+            <div class="venue-body">
+              <h3 class="venue-title">Wedding Reception</h3>
+              <dl class="venue-facts">
+                <div><dt>Date</dt><dd id="receptionDate">Tuesday, December 1</dd></div>
+                <div><dt>Time</dt><dd id="receptionTimeCard">5:00 PM</dd></div>
+                <div><dt>Venue</dt><dd><strong id="receptionVenue">Justice Ramon B. Britanico Memorial Hall</strong><span id="receptionAddress">Miagao, Iloilo</span></dd></div>
+              </dl>
               <a class="pill-link" id="receptionMapLink" href="https://www.google.com/maps/search/?api=1&amp;query=Justice+Ramon+B.+Britanico+Memorial+Hall%2C+Miagao%2C+Iloilo%2C+Philippines" target="_blank" rel="noopener">Find the reception</a>
             </div>
+          </article>
+        </div>
+        <section class="save-date-card" aria-labelledby="saveDateTitle">
+          <div class="mini-calendar" aria-label="Wedding date on the calendar">
+            <div class="mini-calendar-heading">
+              <span class="mini-calendar-kicker">Save the date</span>
+              <h3 id="calendarMonth">December 2026</h3>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+            </div>
+            <ol class="calendar-days" id="calendarDays" aria-label="Days of the wedding month"></ol>
           </div>
-        </article>
+          <div class="save-date-copy">
+            <span class="attire-eyebrow">A day to remember</span>
+            <h3 id="saveDateTitle">Keep our day close</h3>
+            <p class="calendar-event-date" id="calendarEventDate">Tuesday, December 1, 2026</p>
+            <p class="save-date-note">We would love to celebrate this day with you. Add it to your calendar so you can be part of every moment.</p>
+            <div class="calendar-actions" aria-label="Add wedding to your calendar">
+              <a class="calendar-action calendar-action-primary" id="googleCalendarLink" href="#" target="_blank" rel="noopener">Google Calendar <span aria-hidden="true">↗</span></a>
+              <a class="calendar-action" id="icsCalendarLink" href="#" download="ranelia-mark-jan-wedding.ics">Apple / Outlook <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+        </section>
 
         <section class="attire-guides" aria-labelledby="attireGuideTitle">
           <header class="attire-guide-heading">
@@ -246,7 +259,6 @@
               <img src="images/3rd.webp" width="1920" height="1280" alt="Bridesmaid dress guide in blush, dusty rose, and mauve" loading="lazy" decoding="async">
             </a>
           </div>
-          </div>
         </section>
         <details class="wedding-party">
           <summary class="wedding-party-summary">
@@ -254,88 +266,44 @@
             <span class="party-summary-action"><span class="party-action-closed">View names</span><span class="party-action-open">Hide names</span><span class="party-chevron" aria-hidden="true"></span></span>
           </summary>
           <div class="party-groups">
-            <section class="party-group">
-              <h4>Ninong</h4>
-              <ol>
-                <li>William Frigillano</li>
-                <li>Ptr. Cesar Moleño</li>
-                <li>Ptr. Melchor Valenzuela</li>
-                <li>Ruben Frigillano</li>
-                <li>Rodrigo Frigillano</li>
-                <li>Ptr. Jay-R Latore</li>
-                <li>Jenard Cornelio</li>
-                <li>Lucio Cornelio</li>
-              </ol>
+            <section class="party-tier">
+              <h4 class="tier-title">Principal sponsors</h4>
+              <div class="tier-grid two">
+                <section class="party-card"><h5>Ninong</h5>
+                  <ul class="party-list"><li>William Frigillano</li><li>Ptr. Cesar Moleño</li><li>Ptr. Melchor Valenzuela</li><li>Ruben Frigillano</li><li>Rodrigo Frigillano</li><li>Ptr. Jay-R Latore</li><li>Jenard Cornelio</li><li>Lucio Cornelio</li></ul>
+                </section>
+                <section class="party-card"><h5>Ninang</h5>
+                  <ul class="party-list"><li>Shirley Frigillano</li><li>Alyssa Moleño</li><li>Vichell Valenzuela</li><li>Venus Nalaunan</li><li>Yolanda Frigillano</li><li>Jocelyn Latore</li><li>Jane Battung</li><li>Margie Patrivo</li><li>Joedeth Fandiñola</li><li>Anny Cornelio</li><li>Theresa Cornelio</li></ul>
+                </section>
+              </div>
             </section>
-            <section class="party-group">
-              <h4>Ninang</h4>
-              <ol>
-                <li>Shirley Frigillano</li>
-                <li>Alyssa Moleño</li>
-                <li>Vichell Valenzuela</li>
-                <li>Venus Nalaunan</li>
-                <li>Yolanda Frigillano</li>
-                <li>Jocelyn Latore</li>
-                <li>Jane Battung</li>
-                <li>Margie Patrivo</li>
-                <li>Joedeth Fandiñola</li>
-                <li>Anny Cornelio</li>
-                <li>Theresa Cornelio</li>
-              </ol>
+
+            <section class="party-tier">
+              <h4 class="tier-title">The couple’s party</h4>
+              <div class="tier-grid two">
+                <section class="party-card is-featured"><h5>Best Man</h5><p class="party-name">Marlon Villadar</p></section>
+                <section class="party-card is-featured"><h5>Maid of Honor</h5><p class="party-name">Cindy Frigillano</p></section>
+                <section class="party-card"><h5>Groomsmen</h5>
+                  <ul class="party-list"><li>Jomel Servidad</li><li>Mark Allen Garcia</li><li>Ptr. Christian Kyle Robles</li><li>Lawton Cornelio</li><li>Narciso Guiad</li><li>Jamil Calzado</li></ul>
+                </section>
+                <section class="party-card"><h5>Bridesmaids</h5>
+                  <ul class="party-list"><li>Melody Villadar</li><li>Queenie Khryss Espada</li><li>Jay Roz Tormon</li><li>Jesserie Santocildes</li><li>Mary Kaye Jativa</li><li>Donna Cornelio</li></ul>
+                </section>
+              </div>
             </section>
-            <section class="party-group">
-              <h4>Best Man</h4>
-              <p>Marlon Villadar</p>
-            </section>
-            <section class="party-group">
-              <h4>Groomsmen</h4>
-              <ol>
-                <li>Jomel Servidad</li>
-                <li>Mark Allen Garcia</li>
-                <li>Ptr. Christian Kyle Robles</li>
-                <li>Lawton Cornelio</li>
-                <li>Narciso Guiad</li>
-                <li>Jamil Calzado</li>
-              </ol>
-            </section>
-            <section class="party-group">
-              <h4>Maid of Honor</h4>
-              <p>Cindy Frigillano</p>
-            </section>
-            <section class="party-group">
-              <h4>Bridesmaids</h4>
-              <ol>
-                <li>Melody Villadar</li>
-                <li>Queenie Khryss Espada</li>
-                <li>Jay Roz Tormon</li>
-                <li>Jesserie Santocildes</li>
-                <li>Mary Kaye Jativa</li>
-                <li>Donna Cornelio</li>
-              </ol>
-            </section>
-            <section class="party-group">
-              <h4>Ring Bearer</h4>
-              <p>Nathan Gabriel F. Sy</p>
-            </section>
-            <section class="party-group">
-              <h4>Coin Bearer</h4>
-              <p>Isaiah Jude Genilla</p>
-            </section>
-            <section class="party-group">
-              <h4>Bible Bearer</h4>
-              <p>Zachary Gael Nargatan</p>
-            </section>
-            <section class="party-group">
-              <h4>Flower Girls</h4>
-              <ul>
-                <li>Aviory danielle S. Parigde</li>
-                <li>Zemira Mei F. Sy</li>
-                <li>Elisha Rayne F. Battung</li>
-                <li>Juen Shiloah F. Maestrecampo</li>
-                <li>Crzyl Reign Villanueva</li>
-                <li>Rhyzl Queen Villanueva</li>
-                <li>Praise Latore</li>
-              </ul>
+
+            <section class="party-tier">
+              <h4 class="tier-title">Our little ones</h4>
+              <div class="tier-grid three">
+                <section class="party-card"><h5>Ring Bearer</h5><p class="party-name">Nathan Gabriel F. Sy</p></section>
+                <section class="party-card"><h5>Coin Bearer</h5><p class="party-name">Isaiah Jude Genilla</p></section>
+                <section class="party-card"><h5>Bible Bearer</h5><p class="party-name">Zachary Gael Nargatan</p></section>
+              </div>
+              <div class="tier-grid">
+                <section class="party-card"><h5>Flower Girls</h5>
+                  <ul class="party-list is-wide"><li>Aviory Danielle S. Parigde</li><li>Zemira Mei F. Sy</li><li>Elisha Rayne F. Battung</li><li>Juen Shiloah F. Maestrecampo</li><li>Crzyl Reign Villanueva</li><li>Rhyzl Queen Villanueva</li><li>Praise Latore</li></ul>
+                </section>
+              </div>
             </section>
           </div>
         </details>

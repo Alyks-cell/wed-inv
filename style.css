@@ -1,13 +1,3 @@
-/* ==========================================================================
-   Ranelia & Mark Jan — wedding invitation
-   Fine-stationery system: ivory paper, warm ink, blush and champagne accents.
-
-   Type roles
-   - Display (names, headings, numerals): Cormorant Garamond, large sizes only
-   - Reading text: EB Garamond, never below 17px
-   - Labels: Jost capitals, never below 10px
-   ========================================================================== */
-
 :root {
   /* Colour: text tones are tuned for at least 4.5:1 contrast on paper. */
   --paper: #fbf7f1;
@@ -807,11 +797,12 @@ body.is-revealed .hero-bloom-right { animation-delay: 1.4s; animation-duration: 
 .attire-guides::before { position: absolute; inset: 9px; border: 1px solid var(--gold-soft); content: ''; pointer-events: none; }
 .attire-guide-heading, .attire-role-grid, .attire-guide-grid, .palette { position: relative; }
 .attire-guide-heading { text-align: center; }
-.attire-eyebrow { color: var(--gold-text); font: 500 10px/1.4 var(--sans); letter-spacing: .24em; text-transform: uppercase; }
+.attire-eyebrow { color: var(--gold-text); font: 500 10px/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
 .attire-guide-heading h3 { margin: 12px 0 0; color: var(--ink); font: 400 clamp(30px, 3.4vw, 42px)/1.12 var(--display); }
 .attire-guide-heading p { margin: 12px 0 0; color: var(--ink-soft); font: italic 400 18px/1.5 var(--serif); }
 .attire-role-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: clamp(28px, 4vw, 40px); }
-.attire-role { display: flex; min-height: 82px; align-items: center; gap: 13px; padding: 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, .54); }
+.attire-role { display: flex; min-height: 82px; align-items: center; gap: 13px; padding: 14px; background: transparent; }
+.attire-role + .attire-role { border-left: 1px solid var(--line); }
 .attire-role-dot { width: 27px; height: 27px; flex: 0 0 27px; border: 1px solid rgba(51, 41, 42, .12); border-radius: 50%; box-shadow: 0 0 0 4px var(--card); }
 .attire-role-dot.blush-pink { background: #e8c4c5; }
 .attire-role-dot.dusty-pink { background: #ca9299; }
@@ -826,7 +817,7 @@ body.is-revealed .hero-bloom-right { animation-delay: 1.4s; animation-duration: 
 .palette { display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: clamp(30px, 4vw, 42px); padding-top: clamp(24px, 3vw, 32px); border-top: 1px solid var(--line); }
 .palette-intro { margin: 0; color: var(--ink-soft); font: italic 400 19px/1.4 var(--serif); }
 .palette-list { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-5) 28px; margin: 0; padding: 0; list-style: none; }
-.palette-swatch { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--muted); font: 500 10px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; }
+.palette-swatch { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--muted); font: 500 10px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
 .palette-dot { width: 44px; height: 44px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(51, 41, 42, .08), 0 0 0 4px var(--paper), 0 0 0 5px var(--line); }
 .palette-dot.blush { background: #e7c4bb; }
 .palette-dot.beige { background: #e3d3bf; }
@@ -994,6 +985,7 @@ body.motion-ready .reveal .palette { transition-delay: .8s; }
   .details-strip { grid-template-columns: 1fr; }
   .detail + .detail { border-top: 1px solid var(--line); border-left: 0; }
   .attire-role-grid { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; }
+  .attire-role + .attire-role { border-top: 1px solid var(--line); border-left: 0; }
   .attire-guide-grid { grid-template-columns: 1fr; max-width: 500px; margin-inline: auto; }
   .party-groups { grid-template-columns: 1fr; }
   .calendar-label { width: 100%; }
@@ -1074,4 +1066,123 @@ body.motion-ready .reveal .palette { transition-delay: .8s; }
   .invitation-envelope { min-height: 0; padding: 0; }
   .letter-paper { position: relative !important; inset: auto !important; height: auto !important; transform: none !important; }
   .letter-inner, .letter-glyph, .signature-joiner, .signature-name { opacity: 1 !important; filter: none !important; transform: none !important; }
+}
+/* =========================================================================
+   ADD THIS TO THE VERY END OF style.css (after the @media print block is fine;
+   it is written to override the older .gallery-item / .ceremony-card / .party-* rules)
+   ========================================================================= */
+
+/* ---- 1. Couple portrait frame ------------------------------------------ */
+.gallery-item {
+  --frame-gold: #b08f5e;
+  padding: clamp(10px, 1.8vw, 16px);
+  border: 1px solid var(--frame-gold);
+  background: linear-gradient(145deg, #fffdf9 0%, #f4ead9 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 28px 60px -24px rgba(69, 49, 39, .32), 0 4px 14px rgba(69, 49, 39, .08);
+}
+.gallery-item::after { inset: 5px; border: 1px solid var(--gold-soft); }
+.frame-mat {
+  position: relative;
+  padding: clamp(14px, 3.2vw, 28px);
+  background: var(--grain), #f7f0e3;
+  box-shadow: inset 0 0 0 1px var(--gold-soft), inset 0 3px 12px rgba(69, 49, 39, .1);
+}
+.frame-mat img { box-shadow: 0 0 0 1px rgba(176, 143, 94, .55), 0 6px 18px rgba(69, 49, 39, .22); }
+.frame-corner { position: absolute; z-index: 2; width: 22px; height: 22px; border: 0 solid var(--frame-gold); pointer-events: none; }
+.frame-corner::after { position: absolute; width: 5px; height: 5px; background: var(--frame-gold); transform: rotate(45deg); content: ''; }
+.frame-corner.tl { top: 0; left: 0; border-width: 2px 0 0 2px; } .frame-corner.tl::after { top: -3px; left: -3px; }
+.frame-corner.tr { top: 0; right: 0; border-width: 2px 2px 0 0; } .frame-corner.tr::after { top: -3px; right: -3px; }
+.frame-corner.bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; } .frame-corner.bl::after { bottom: -3px; left: -3px; }
+.frame-corner.br { right: 0; bottom: 0; border-width: 0 2px 2px 0; } .frame-corner.br::after { right: -3px; bottom: -3px; }
+.frame-corner { margin: 0; }
+.gallery-item > .frame-corner.tl, .gallery-item > .frame-corner.tr { top: 4px; }
+.gallery-item > .frame-corner.bl, .gallery-item > .frame-corner.br { bottom: 4px; }
+.gallery-item > .frame-corner.tl, .gallery-item > .frame-corner.bl { left: 4px; }
+.gallery-item > .frame-corner.tr, .gallery-item > .frame-corner.br { right: 4px; }
+
+/* ---- 2. The celebration: two matching cards ----------------------------- */
+.venue-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); text-align: center; }
+.venue-card { display: flex; flex-direction: column; background: var(--grain), var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-soft); }
+.venue-photo { position: relative; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 1px solid var(--gold-soft); }
+.venue-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+.venue-body { display: flex; flex: 1; flex-direction: column; align-items: center; padding: clamp(28px, 4vw, 40px) clamp(22px, 3.4vw, 40px) clamp(28px, 4vw, 36px); }
+.venue-title { margin: 0; color: var(--ink); font: 400 clamp(30px, 3.2vw, 38px)/1.1 var(--display); }
+.venue-title::after { display: block; width: 36px; height: 1px; margin: 16px auto 0; background: var(--gold); content: ''; }
+.venue-facts { width: 100%; margin: 24px 0 28px; }
+.venue-facts > div { display: grid; grid-template-columns: 76px 1fr; align-items: baseline; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); text-align: left; }
+.venue-facts > div:last-child { border-bottom: 1px solid var(--line); }
+.venue-facts dt { color: var(--gold-text); font: 500 10px/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+.venue-facts dd { display: flex; flex-direction: column; gap: 2px; margin: 0; color: var(--ink); font: 400 19px/1.4 var(--serif); }
+.venue-facts dd strong { font-weight: 500; text-wrap: balance; }
+.venue-facts dd span { color: var(--ink-soft); font-size: 17px; }
+.venue-body .pill-link { align-self: stretch; margin-top: auto; }
+.venue-calendar { justify-content: center; margin-top: var(--space-5); }
+
+/* ---- 3. Wedding party (dropdown unchanged, boxes redesigned) ------------- */
+.wedding-party .party-groups { display: flex; flex-direction: column; gap: 40px; padding: 8px 0 36px; }
+.party-tier { display: flex; flex-direction: column; gap: 14px; }
+.tier-title { display: flex; align-items: center; gap: 16px; margin: 0 0 4px; color: var(--gold-text); font: italic 500 22px/1.2 var(--display); text-align: center; }
+.tier-title::before, .tier-title::after { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft)); content: ''; }
+.tier-title::after { transform: scaleX(-1); }
+.tier-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.tier-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tier-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.party-card { position: relative; padding: 26px 22px 24px; background: var(--grain), var(--card); border: 1px solid var(--line); text-align: center; }
+.party-card::before { position: absolute; inset: 5px; border: 1px solid var(--line-soft); content: ''; pointer-events: none; }
+.party-card h5 { margin: 0 0 18px; color: var(--rose-deep); font: italic 500 23px/1.2 var(--display); }
+.party-card h5::after { display: block; width: 24px; height: 1px; margin: 12px auto 0; background: var(--gold); content: ''; }
+.party-list { display: grid; gap: 8px; margin: 0; padding: 0; color: var(--ink-soft); font: 400 17px/1.4 var(--serif); list-style: none; }
+.party-list.is-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
+.party-name { margin: 0; color: var(--ink); font: 400 22px/1.3 var(--display); }
+.party-card.is-featured { background: linear-gradient(180deg, #fffdf9, #f7efe3); border-color: var(--gold-soft); }
+
+@media (max-width: 760px) {
+  .venue-grid, .tier-grid.two, .tier-grid.three { grid-template-columns: 1fr; }
+  .party-list.is-wide { grid-template-columns: 1fr; }
+}
+
+/* Save the date: a real month grid paired with discreet calendar actions. */
+.save-date-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, .85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 5vw, 60px);
+  align-items: center;
+  max-width: 760px;
+  margin: clamp(36px, 5vw, 52px) auto 0;
+  padding: clamp(28px, 5vw, 52px);
+  border: 1px solid var(--line);
+  background: var(--grain), var(--card);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+}
+.save-date-card::before { position: absolute; inset: 7px; border: 1px solid var(--line-soft); content: ''; pointer-events: none; }
+.mini-calendar, .save-date-copy { position: relative; }
+.mini-calendar { padding: 20px; border: 1px solid var(--gold-soft); background: linear-gradient(155deg, #fffdf9, #f7efe3); box-shadow: 0 10px 26px rgba(69, 49, 39, .08); }
+.mini-calendar-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.mini-calendar-kicker { color: var(--gold-text); font: 500 9px/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+.mini-calendar-heading h3 { margin: 0; color: var(--ink); font: 400 19px/1.1 var(--display); }
+.calendar-weekdays, .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); justify-items: center; }
+.calendar-weekdays { margin-top: 14px; color: var(--muted); font: 500 10px/1 var(--sans); }
+.calendar-days { gap: 4px 2px; margin: 9px 0 0; padding: 0; color: var(--ink-soft); font: 400 14px/1 var(--sans); list-style: none; }
+.calendar-days li { display: grid; width: 30px; height: 30px; place-items: center; }
+.calendar-days .is-event-day { position: relative; border-radius: 50%; background: var(--rose-deep); color: #fffaf4; font-weight: 600; box-shadow: 0 3px 9px rgba(138, 86, 76, .28); }
+.calendar-days .is-event-day::after { position: absolute; right: -2px; bottom: -3px; left: -2px; height: 1px; background: var(--gold); content: ''; }
+.save-date-copy .attire-eyebrow { display: block; }
+.save-date-copy > h3 { margin: 10px 0 0; color: var(--ink); font: 400 clamp(30px, 3.5vw, 40px)/1.08 var(--display); }
+.calendar-event-date { margin: 15px 0 0; color: var(--rose-deep); font: italic 400 20px/1.35 var(--serif); }
+.save-date-note { max-width: 38ch; margin: 12px 0 0; color: var(--ink-soft); font: 400 16px/1.55 var(--serif); }
+.calendar-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.calendar-action { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 12px; padding: 11px 15px; border: 1px solid var(--line); color: var(--ink); font: 500 10px/1.2 var(--sans); letter-spacing: .07em; text-decoration: none; transition: color .25s ease, border-color .25s ease, background .25s ease; }
+.calendar-action span { color: var(--gold-text); font-size: 14px; }
+.calendar-action:hover { border-color: var(--gold); background: #fffaf2; }
+.calendar-action-primary { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.calendar-action-primary span { color: var(--gold-soft); }
+.calendar-action-primary:hover { border-color: var(--rose-deep); background: var(--rose-deep); color: #fffaf4; }
+
+@media (max-width: 620px) {
+  .save-date-card { grid-template-columns: 1fr; gap: 28px; padding: 28px 22px; }
+  .mini-calendar { width: min(100%, 360px); justify-self: center; }
+  .calendar-actions { flex-direction: column; }
+  .calendar-action { width: 100%; }
 }
