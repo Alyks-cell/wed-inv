@@ -304,6 +304,17 @@ function renderInvitation() {
   getElement('nameTwo').textContent = second.givenNames;
   getElement('surnameOne').textContent = first.surname;
   getElement('surnameTwo').textContent = second.surname;
+  getElement('acceptanceCouple').textContent = `${first.givenNames} & ${second.givenNames}`;
+  getElement('acceptanceMonthDay').textContent = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Manila',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+  getElement('acceptanceYear').textContent = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Manila',
+    year: 'numeric',
+  }).format(date);
+  getElement('acceptanceTime').textContent = invitation.ceremonyTime;
   getElement('openingNameOne').textContent = first.givenNames;
   getElement('openingNameTwo').textContent = second.givenNames;
   getElement('openingSurnameOne').textContent = first.surname;
@@ -600,6 +611,12 @@ function toggleEnvelope() {
   transitionTimer = window.setTimeout(finishClosing, 1100);
 }
 
+function showAcceptanceDialog(guestName) {
+  const dialog = getElement('acceptanceDialog');
+  getElement('acceptanceGuest').textContent = guestName.split(/\s+/u)[0];
+  if (!dialog.open) dialog.showModal();
+}
+
 function handleRsvp(event) {
   event.preventDefault();
 
@@ -630,6 +647,7 @@ function handleRsvp(event) {
       ? `Thank you, ${firstName}! We can’t wait to celebrate with you.`
       : `Thank you for letting us know, ${firstName}. You’ll be missed!`;
     form.reset();
+    if (response === 'accept') showAcceptanceDialog(guestName);
   }).catch((error) => {
     status.classList.add('is-error');
     status.textContent = error.message
@@ -690,6 +708,10 @@ getElement('letterContinue').addEventListener('click', () => {
   }, 1150);
 });
 getElement('rsvpForm').addEventListener('submit', handleRsvp);
+getElement('closeAcceptance').addEventListener('click', () => getElement('acceptanceDialog').close());
+getElement('acceptanceDialog').addEventListener('click', (event) => {
+  if (event.target === event.currentTarget) event.currentTarget.close();
+});
 
 const countdownTimer = window.setInterval(updateCountdown, 1000);
 renderInvitation();
