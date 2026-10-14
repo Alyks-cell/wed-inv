@@ -320,6 +320,8 @@ img, svg { display: block; }
 #invitationMain { position: relative; isolation: isolate; }
 .main-petal-layer { position: fixed; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; }
 .main-petal { --petal-opacity: .28; }
+.main-petal.petal-small { --petal-width: 6px; --petal-height: 10px; --petal-opacity: .24; }
+.main-petal.petal-large { --petal-width: 12px; --petal-height: 18px; --petal-opacity: .2; }
 body.intro-active .main-petal-layer { visibility: hidden; }
 
 /* ==========================================================================
@@ -1180,9 +1182,67 @@ body.motion-ready .reveal .palette { transition-delay: .8s; }
 .calendar-action-primary span { color: var(--gold-soft); }
 .calendar-action-primary:hover { border-color: var(--rose-deep); background: var(--rose-deep); color: #fffaf4; }
 
+/* Floating calendar treatment: keep the date grid and its caption, lose the box. */
+.save-date-card { max-width: 800px; grid-template-columns: minmax(220px, .78fr) minmax(0, 1.22fr); border: 0; background: transparent; box-shadow: none; }
+.save-date-card::before, .save-date-card::after {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  width: clamp(100px, 18vw, 170px);
+  height: clamp(190px, 30vw, 280px);
+  background: url("images/calendar-floral.svg") center / contain no-repeat;
+  content: '';
+  opacity: .24;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.save-date-card::before { left: -30px; }
+.save-date-card::after { right: -30px; transform: translateY(-50%) scaleX(-1); }
+.save-date-card > * { z-index: 1; }
+.mini-calendar { padding: 18px 12px 12px; border: 0; background: transparent; box-shadow: none; }
+.mini-calendar-heading { justify-content: center; flex-direction: column; gap: 7px; padding-bottom: 13px; border-bottom-color: var(--gold-soft); }
+.mini-calendar-heading h3 { font-size: 23px; }
+.calendar-weekdays { color: var(--gold-text); }
+.calendar-days { gap: 6px 2px; margin-top: 12px; }
+.calendar-days li { width: 34px; height: 34px; }
+.calendar-days .is-event-day { box-shadow: 0 5px 14px rgba(138, 86, 76, .24); }
+.calendar-event-date { display: inline-block; margin-top: 15px; padding-bottom: 5px; border-bottom: 1px solid var(--gold-soft); }
+
 @media (max-width: 620px) {
-  .save-date-card { grid-template-columns: 1fr; gap: 28px; padding: 28px 22px; }
+  .save-date-card { grid-template-columns: 1fr; gap: 22px; padding: 20px 12px; }
+  .save-date-card::before, .save-date-card::after { width: 96px; height: 180px; opacity: .16; }
+  .save-date-card::before { left: -20px; top: 27%; }
+  .save-date-card::after { right: -20px; top: 72%; }
   .mini-calendar { width: min(100%, 360px); justify-self: center; }
   .calendar-actions { flex-direction: column; }
   .calendar-action { width: 100%; }
 }
+
+/* Keep scroll responsive by avoiding perpetual fixed-layer and blur work. */
+.landing-nav a, .music-toggle { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.landing-nav a { background: rgba(251, 247, 241, .78); }
+.music-toggle { background: rgba(251, 247, 241, .82); }
+body.motion-ready .reveal,
+body.motion-ready .reveal :is(.chapter-head, .gallery-item, .ceremony-card, .detail, .palette) {
+  transform: none;
+  transition-duration: .35s;
+  transition-delay: 0s;
+}
+body.motion-ready .reveal { transition-property: opacity; }
+body.motion-ready .reveal :is(.chapter-head, .gallery-item, .ceremony-card, .detail, .palette) { transition-property: opacity; }
+
+/* Restore the slower, staggered scroll entrance while retaining the fade. */
+body.motion-ready .reveal {
+  transform: translateY(30px);
+  transition: opacity 1.1s var(--ease), transform 1.3s var(--ease-out);
+}
+body.motion-ready .reveal.is-visible { transform: none; }
+body.motion-ready .reveal :is(.chapter-head, .gallery-item, .ceremony-card, .detail, .palette, .venue-card, .save-date-card, .attire-guides, .wedding-party) {
+  transform: translateY(18px);
+  transition: opacity 1s var(--ease) .15s, transform 1.1s var(--ease-out) .15s;
+}
+body.motion-ready .reveal.is-visible :is(.chapter-head, .gallery-item, .ceremony-card, .detail, .palette, .venue-card, .save-date-card, .attire-guides, .wedding-party) { transform: none; }
+body.motion-ready .reveal .gallery-item { transition-delay: .1s; }
+body.motion-ready .reveal .venue-card:nth-child(2) { transition-delay: .28s; }
+body.motion-ready .reveal .save-date-card { transition-delay: .4s; }
+body.motion-ready .reveal .attire-guides { transition-delay: .55s; }
